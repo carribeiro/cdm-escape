@@ -185,20 +185,20 @@ from cdmjogo.classes.mcp23017 import MCP23017 as mcp
 lista_leds = [37, 35, 21, 23, 29, 24, 15, 19, 12, 10, 18, 16, 38, 40]
 
 status_leds = {
-    37: False,
-    35: False,
-    21: False,
-    23: False,
-    29: False,
-    24: False,
-    15: False,
-    19: False,
-    12: False,
-    10: False,
-    18: False,
-    16: False,
-    38: False,
-    40: False,
+    37: False, # Divisoria Vermelho (37)
+    35: False, # Divisoria Verde (35)
+    21: False, # Gaveta Inferior Vermelho (21)
+    23: False, # Gaveta Inferior Verde (23)
+    29: False, # Acima Microondas Vermelho (29)
+    24: False, # Acima Microondas Verde (24)
+    15: False, # Pia Vermelho (15)
+    19: False, # Pia Verde = (19)
+    12: False, # Aparador Vermelho (12)
+    10: False, # Aparador Verde (10)
+    18: False, # Baú Vermelho (18)
+    16: False, # Baú Verde (16)
+    38: False, # Geladeira Vermelho (38)
+    40: False, # Geladeira Verde (40)
 }
 
 def ajaxdebugstatus(request):
@@ -234,7 +234,7 @@ def setledhi(request):
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
             GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, not(GPIO.HIGH)
+            GPIO.output(led, not(GPIO.HIGH) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
             status_leds[led] = True
 
             dicionario_json = {
@@ -255,7 +255,7 @@ def setledlo(request):
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
             GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, not(GPIO.LOW)
+            GPIO.output(led, not(GPIO.LOW) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
             status_leds[led] = False
 
             dicionario_json = {
