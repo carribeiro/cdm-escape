@@ -163,6 +163,7 @@ def ajaxstatus(request):
 
     return JsonResponse(dicionario_json)
 
+
 # ------------- FIM AJAX ------------------
 
 # View para DEBUG do projeto
@@ -173,6 +174,93 @@ def ajaxdesenvolvimento(request):
     dicionario_json = {
         'retorno': 'ajax desenvolvimento, OK!'
     }
+
+    return JsonResponse(dicionario_json)
+
+import RPi.GPIO as GPIO # Modulo de controle GPIO
+from cdmjogo.classes.mcp23017 import MCP23017 as mcp
+
+# LEDs: 37 35 21 23 29 24 15 19 12 10 18 16 38 40   
+
+lista_leds = [37, 35, 21, 23, 29, 24, 15, 19, 12, 10, 18, 16, 38, 40]
+
+status_leds = {
+    37: False,
+    35: False,
+    21: False,
+    23: False,
+    29: False,
+    24: False,
+    15: False,
+    19: False,
+    12: False,
+    10: False,
+    18: False,
+    16: False,
+    38: False,
+    40: False,
+}
+
+def ajaxdebugstatus(request):
+    # 37 35 21 23 29 24 15 19 12 10 18 16 38 40      
+    dicionario_json = { 'leds': status_leds }
+    return JsonResponse(dicionario_json)
+
+def resetleds(request):
+    if request.method == 'GET':
+        # Configura as GPIOs como BOARD, Contagem de 0 a 40
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
+        for led in lista_leds:
+            status_leds[led] = False
+            GPIO.setup(led, GPIO.OUT)
+            GPIO.output(status_leds[led], GPIO.LOW)            
+
+    dicionario_json = {
+        'retorno': 'resetleds, OK!'
+    }
+
+    return JsonResponse(dicionario_json)
+
+def setledhi(request):
+    dicionario_json = {
+        'retorno': 'setledhi = FAIL!'
+    }
+    if request.method == 'GET':
+        led = request.GET.get('led', None)
+
+        if led in status_leds:
+            # Configura as GPIOs como BOARD, Contagem de 0 a 40
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setwarnings(False)
+            GPIO.setup(led, GPIO.OUT)
+            GPIO.output(led, GPIO.HIGH)
+            status_leds[led] = True
+
+            dicionario_json = {
+                'retorno': 'setledhi = PASSED!'
+            }
+
+    return JsonResponse(dicionario_json)
+
+def setledlo(request):
+    dicionario_json = {
+        'retorno': 'setledlo = FAIL!'
+    }
+    if request.method == 'GET':
+        led = request.GET.get('led', None)
+
+        if led in status_leds:
+            # Configura as GPIOs como BOARD, Contagem de 0 a 40
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setwarnings(False)
+            GPIO.setup(led, GPIO.OUT)
+            GPIO.output(led, GPIO.LOW)
+            status_leds[led] = False
+
+            dicionario_json = {
+                'retorno': 'setledlo = PASSED!'
+            }
 
     return JsonResponse(dicionario_json)
 

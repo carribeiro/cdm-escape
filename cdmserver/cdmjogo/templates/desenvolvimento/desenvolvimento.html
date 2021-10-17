@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.min.css' %}">
+    <!-- Meus Styles -->
+    <link rel="stylesheet" href="{% static 'css/styledebug.css' %}">
     <title>::Desenvolvimento::</title>
 </head>
 <body>
@@ -15,5 +19,95 @@
         <li><a href="/ajaxhistoria2">ajaxhistoria2</a> </li>
         <li><a href="/ajaxdesenvolvimento">ajaxdesenvolvimento</a></li>
     </ul>
+    <ul>
+        <li>
+            <button id="btn-reset-leds" type="button" class="btn btn-info">RESET LEDs</button>
+        </li>
+        <li>
+            <span id="status-led-37" class="dot dotCinza"></span>          
+            Divisoria Vermelho (37)         
+            <button id="btn-led-37-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-37-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-35" class="dot dotCinza"></span>
+            Divisoria Verde (35)
+            <button id="btn-led-35-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-35-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-21" class="dot dotCinza"></span>
+            Gaveta Inferior Vermelho (21)
+            <button id="btn-led-21-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-21-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-23" class="dot dotCinza"></span>
+            Gaveta Inferior Verde (23)
+            <button id="btn-led-23-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-23-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-29" class="dot dotCinza"></span>
+            Acima Microondas Vermelho (29)
+            <button id="btn-led-29-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-29-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-24" class="dot dotCinza"></span>
+            Acima Microondas Verde (24)
+            <button id="btn-led-24-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-24-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-15" class="dot dotCinza"></span>
+            Pia Vermelho (15)
+            <button id="btn-led-15-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-15-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-19" class="dot dotCinza"></span>
+            Pia Verde = (19)
+            <button id="btn-led-19-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-19-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-12" class="dot dotCinza"></span>
+            Aparador Vermelho (12)
+            <button id="btn-led-12-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-12-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-10" class="dot dotCinza"></span>
+            Aparador Verde (10)
+            <button id="btn-led-10-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-10-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-18" class="dot dotCinza"></span>
+            Baú Vermelho (18)
+            <button id="btn-led-18-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-18-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-16" class="dot dotCinza"></span>
+            Baú Verde (16)
+            <button id="btn-led-16-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-16-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-38" class="dot dotCinza"></span>
+            Geladeira Vermelho (38)
+            <button id="btn-led-38-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-38-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+        <li>
+            <span id="status-led-40" class="dot dotCinza"></span>
+            Geladeira Verde (40)
+            <button id="btn-led-40-hi" type="button" class="btn btn-info">HI</button>
+            <button id="btn-led-40-lo" type="button" class="btn btn-info">LO</button>
+        </li>
+    </ul>
+
 </body>
 </html>
