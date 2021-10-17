@@ -234,7 +234,7 @@ def setledhi(request):
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
             GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, GPIO.HIGH)
+            GPIO.output(led, not(GPIO.HIGH)
             status_leds[led] = True
 
             dicionario_json = {
@@ -255,7 +255,7 @@ def setledlo(request):
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
             GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, GPIO.LOW)
+            GPIO.output(led, not(GPIO.LOW)
             status_leds[led] = False
 
             dicionario_json = {
