@@ -57,35 +57,21 @@ function requestStatusLeds() {
 
             //console.log(resposta);
 
-            // 37 35 21 23 29 24 15 19 12 10 18 16 38 40            
-            var status_led_37 = document.querySelector('#status-led-37');
-            if (resposta.leds[37] == true) {
-                dotlogica1.className = "dot dotVermelho";
-            } else {
-                dotlogica1.className = "dot dotCinza"
-            }
-
-            var status_led_39 = document.querySelector('#status-led-39');
-            if (resposta.leds[39] == true) {
-                dotlogica1.className = "dot dotVerde";
-            } else {}
-                dotlogica1.className = "dot dotCinza"
-            }
-
-            var status_led_21 = document.querySelector('#status-led-39');
-            if (resposta.leds[21] == true) {
-                dotlogica1.className = "dot dotVermelho";
-            } else {
-                dotlogica1.className = "dot dotCinza"
-            }
-
-            var status_led_23 = document.querySelector('#status-led-39');
-            if (resposta.leds[23] == true) {
-                dotlogica1.className = "dot dotVerde";
-            } else {}
-                dotlogica1.className = "dot dotCinza"
-            }
-
+            // Sequência de LEDs: 37 35 21 23 29 24 15 19 12 10 18 16 38 40            
+            document.querySelector('#status-led-37').className = (resposta.leds[37] ? "dot dotVermelho" : "dot dotCinza");
+            document.querySelector('#status-led-35').className = (resposta.leds[35] ? "dot dotVerde" : "dot dotCinza");
+            document.querySelector('#status-led-21').className = (resposta.leds[21] ? "dot dotVermelho" : "dot dotCinza");
+            document.querySelector('#status-led-23').className = (resposta.leds[23] ? "dot dotVerde" : "dot dotCinza");
+            document.querySelector('#status-led-29').className = (resposta.leds[29] ? "dot dotVermelho" : "dot dotCinza");
+            document.querySelector('#status-led-24').className = (resposta.leds[24] ? "dot dotVerde" : "dot dotCinza");
+            document.querySelector('#status-led-15').className = (resposta.leds[15] ? "dot dotVermelho" : "dot dotCinza");
+            document.querySelector('#status-led-19').className = (resposta.leds[19] ? "dot dotVerde" : "dot dotCinza");
+            document.querySelector('#status-led-12').className = (resposta.leds[12] ? "dot dotVermelho" : "dot dotCinza");
+            document.querySelector('#status-led-10').className = (resposta.leds[10] ? "dot dotVerde" : "dot dotCinza");
+            document.querySelector('#status-led-18').className = (resposta.leds[18] ? "dot dotVermelho" : "dot dotCinza");
+            document.querySelector('#status-led-16').className = (resposta.leds[16] ? "dot dotVerde" : "dot dotCinza");
+            document.querySelector('#status-led-38').className = (resposta.leds[38] ? "dot dotVermelho" : "dot dotCinza");
+            document.querySelector('#status-led-40').className = (resposta.leds[40] ? "dot dotVerde" : "dot dotCinza");
         }
     }
 }
