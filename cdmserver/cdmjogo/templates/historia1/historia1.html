@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.min.css' %}">
+
+    <!-- Meus Styles -->
+    <link rel="stylesheet" href="{% static 'css/stylehistoria1.css' %}">
+    <title>::História 1 - Escape::</title>
+</head>
+<body>
+    <!-- CABEÇALHO -->
+    <div id="cabecalho" class="container-fluid bg-dark">
+        <div class="row">
+            <div class="col-sm-6 text-white">
+            <h1 id="h1-titulo">Escape Game</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button id="btn-iniciar-jogo" type="button" class="btn btn-success">Iniciar Jogo</button>
+                <button id="btn-reiniciar-jogo" type="button" class="btn btn-danger">Reiniciar Jogo</button>
+                <button id="btn-desligar-raspberry" type="button" class="btn btn-warning">Desligar Raspberry</button>
+                
+                
+                <span id="span-msg" style="color: white;">Jogo: Parado</span>
+            </div>
+            <div class="col text-center font-weight-bold text-warning">
+            <p id="p-cronometro">*</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CORPO -->
+    <div id="corpo" class="container bg-light text-center">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                <th>Lógica</th>
+                <th>
+                    Status
+                    <button id="btn-play-audio-acerto" type="button" class="btn btn-success">Play Acerto</button>
+                </th>
+                <th>Ações <button id="btn-manual-acoes" type="button" class="btn btn-warning">M. Acoes</button></th>
+                <th>Iluminação <button id="btn-manual-luzes" type="button" class="btn btn-warning">M. Ilumi</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <!--  -->
+                <td>Lógica 1</td>
+                <td><span id="status-logica1" class="dot dotCinza"></span></td>
+                <td></td>
+                <td>
+                    <button id="btn-luz-baixa-sala" type="button" class="btn btn-secondary">Luz Baixa Sala</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 2 e 3</td>
+                <td><span id="status-logica23" class="dot dotCinza"></span></td>
+                <td></td>
+                <td>
+                    <button id="btn-luz-blackout-23" type="button" class="btn btn-dark">Blackout</button>
+                    <button id="btn-luz-bike-bateria" type="button" class="btn btn-secondary">Acender Spot Bike e Spot Bateria</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 4 e 5</td>
+                <td><span id="status-logica45" class="dot dotCinza"></span></td>
+                <td>
+                    <button id="btn-completar-barra-led" type="button" class="btn btn-info">Completar Barra de Led</button>
+                    <button id="btn-abrir-gaveta-cozinha" type="button" class="btn btn-primary">Abrir Gaveta Cozinha</button>
+                </td>
+                <td>
+                    <button id="btn-luz-gaveta-cozinha" type="button" class="btn btn-secondary">Acender Spot Gaveta Cozinha</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 6</td>
+                <td><span id="status-logica6" class="dot dotCinza"></span></td>
+                <td>
+                    <button id="btn-abrir-geladeira" type="button" class="btn btn-primary">Abrir geladeira</button>
+                </td>
+                <td>
+                    <button id="btn-luz-geladeira" type="button" class="btn btn-secondary">Spot Geladeira</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 7</td>
+                <td><span id="status-logica7" class="dot dotCinza"></span></td>
+                <td>
+                    <button id="btn-abrir-porta-banheiro" type="button" class="btn btn-primary">Abrir Porta Banheiro</button>
+                </td>
+                <td>
+                    <button id="btn-luz-banheiro" type="button" class="btn btn-secondary">Spots Banheiro</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 8</td>
+                <td><span id="status-logica8" class="dot dotCinza"></span></td>
+                <td>
+                    <button id="btn-audio-banheiro-play" type="button" class="btn btn-info">Play Som Banheiro</button>
+                    <button id="btn-audio-banheiro-stop" type="button" class="btn btn-info">Stop Som Banheiro</button>
+                    <button id="btn-abrir-gaveta-banheiro" type="button" class="btn btn-primary">Abrir Gaveta Banheiro</button>
+                </td>
+                <td>
+                    <button id="btn-luz-lavanderia" type="button" class="btn btn-secondary">Spots Lavanderia</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 9</td>
+                <td><span id="status-logica9" class="dot dotCinza"></span></td>
+                <td>
+                    <button id="btn-abrir-armario-cozinha" type="button" class="btn btn-primary">Abrir Armario</button>
+                </td>
+                <td>
+                    <button id="btn-luz-armario-cozinha" type="button" class="btn btn-secondary">Spots Armario Cozinha</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 10 e 11</td>
+                <td><span id="status-logica1011" class="dot dotCinza"></span></td>
+                <td>
+                    <button id="btn-abrir-bau" type="button" class="btn btn-primary">Abrir Bau</button>
+                </td>
+                <td>
+                    <button id="btn-luz-bau" type="button" class="btn btn-secondary">Spots Bau</button>
+                </td>
+                </tr>
+                <tr>
+                <!--  -->
+                <td>Lógica 12 e 13</td>
+                <td><span id="status-logica1213" class="dot dotCinza"></span></td>
+                <td>
+                    <button id="btn-abrir-gaveta-aparador" type="button" class="btn btn-info">Abrir Gaveta Aparador</button>
+                    <button id="btn-reestabelecer-energia" type="button" class="btn btn-primary">Restabelecer Energia</button>
+                </td>
+                <td>
+                    <button id="btn-luz-aparador" type="button" class="btn btn-secondary">Luz Aparador</button>
+                    <button id="btn-luz-reestabelecer-energia" type="button" class="btn btn-secondary">Acender Todas Luzes</button>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- RODAPÉ -->
+    <div id="rodape" class="jumbotron text-center">
+        <p>Escape Game</p>
+    </div>
+
+    <!-- AUDIOS -->
+    <!-- audio chuveiro -->
+    <audio id='audio-banheiro'>
+        <source src="{% static 'audios/Shower-sound-effect.mp3' %}" type="audio/ogg">
+            Your browser dows not support the audio element.
+    </audio>
+    <!-- audio acerto -->
+    <audio id='audio-acerto'>
+        <source src="{% static 'audios/acerto.mp3' %}" type="audio/ogg">
+            Your browser dows not support the audio element.
+    </audio>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.min.js' %}"></script>
+
+    <!-- Meus Scripts -->
+    <script src="{% static 'js/scripthistoria1.js' %}"></script>
+</body>
+</html>
