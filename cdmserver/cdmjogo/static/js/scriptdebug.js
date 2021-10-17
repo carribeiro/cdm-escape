@@ -50,7 +50,7 @@ btn_led_37_lo.addEventListener('click', function(){
 
 function requestStatusLeds() {
     var xhttp = new XMLHttpRequest();
-    var url = "ajaxstatus";
+    var url = "ajaxdebugstatus";
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             var resposta = JSON.parse(this.responseText);
@@ -74,6 +74,8 @@ function requestStatusLeds() {
             document.querySelector('#status-led-40').className = (resposta.leds[40] ? "dot dotVerde" : "dot dotCinza");
         }
     }
+    xhttp.open("GET",url,true);
+    xhttp.send()
 }
 
 
