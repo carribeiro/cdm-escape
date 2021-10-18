@@ -315,6 +315,7 @@ def setspotcode(request):
         spot_code = request.GET.get('spot_code', None)
 
         if spot_code in spot_codes:
+            mcp.confRegistradoresLuzes() # GPA como output
             mcp.escreverBinarioLuzes(spot_codes[spot_code])
             dicionario_json = {
                 'retorno': 'setspotcode = PASSED!'
