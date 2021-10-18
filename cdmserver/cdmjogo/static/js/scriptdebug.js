@@ -8,7 +8,7 @@ btn_reset_leds.addEventListener('click', function(){
     requestResetLeds();
 });
 
-const btn_refresh_status.querySelector('#btn-refresh-status')
+const btn_refresh_status = document.querySelector('#btn-refresh-status')
 btn_refresh_status.addEventListener('click', function(){
     requestStatus();
 });
