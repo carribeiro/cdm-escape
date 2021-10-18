@@ -143,3 +143,9 @@ def pulso_abrir_gaveta():
         time.sleep(0.75)
 
 ```
+
+# Lógica 7
+
+```
+mcp.escreverBinarioLuzes(0b0101) # Codigo do Spot do banheiro
+```

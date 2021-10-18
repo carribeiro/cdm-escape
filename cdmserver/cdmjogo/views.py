@@ -303,6 +303,7 @@ spot_codes = {
     '0b0010': 0b0010, # sppot bike
     '0b0011': 0b0011, # spot gaveta gozinha
     '0b0100': 0b0100, # spot geladeira
+    '0b0101': 0b0101, # spot banheiro
 }
 
 def setspotcode(request):

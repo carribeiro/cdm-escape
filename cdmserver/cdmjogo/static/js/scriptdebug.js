@@ -70,11 +70,13 @@ const btn_spot_blackout = document.querySelector('#btn-spot-blackout')
 const btn_spot_bike = document.querySelector('#btn-spot-bike')
 const btn_spot_gaveta_cozinha = document.querySelector('#btn-spot-gaveta-cozinha')
 const btn_spot_geladeira = document.querySelector('#btn-spot-geladeira')
+const btn_spot_banheiro = document.querySelector('#btn-spot-banheiro')
 
 btn_spot_blackout.addEventListener('click', function(){ requestSetSpot('0b1101'); }); 
 btn_spot_bike.addEventListener('click', function(){ requestSetSpot('0b0010'); }); 
 btn_spot_gaveta_cozinha.addEventListener('click', function(){ requestSetSpot('0b0011'); }); 
 btn_spot_geladeira.addEventListener('click', function(){ requestSetSpot('0b0100'); }); 
+btn_spot_banheiro.addEventListener('click', function(){ requestSetSpot('0b0101'); }); 
 
 const btn_bateria_bike_0 = document.querySelector('#btn-bateria-bike-0')
 const btn_bateria_bike_1 = document.querySelector('#btn-bateria-bike-1')
