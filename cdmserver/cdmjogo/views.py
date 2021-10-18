@@ -327,7 +327,7 @@ def setbateria(request):
     if request.method == 'GET':
         nivel = request.GET.get('nivel', None)
 
-        if nivel in ['0','1','2','3','4']]:
+        if nivel in ['0','1','2','3','4']:
             gp_barraLed = [2,3,4,5] # GPA5, GPA4, GPA3, GPA2 (MCP23017)
             nivel_leds = {
                 '0': [mcp.HIGH, mcp.HIGH, mcp.HIGH, mcp.HIGH], 
