@@ -105,6 +105,32 @@ btn_bateria_bike_4.addEventListener('click', function(){ requestSetBateria(4); }
 
 // Chamada Ajax para atualizar status dos LEDs
 
+function updateStatus(resposta) {
+    // Sequência de LEDs: 37 35 21 23 29 24 15 19 12 10 18 16 38 40            
+    document.querySelector('#status-led-37').className = (resposta.leds['37'] ? "dot dotVermelho" : "dot dotCinza");
+    document.querySelector('#status-led-35').className = (resposta.leds['35'] ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-led-21').className = (resposta.leds['21'] ? "dot dotVermelho" : "dot dotCinza");
+    document.querySelector('#status-led-23').className = (resposta.leds['23'] ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-led-29').className = (resposta.leds['29'] ? "dot dotVermelho" : "dot dotCinza");
+    document.querySelector('#status-led-24').className = (resposta.leds['24'] ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-led-15').className = (resposta.leds['15'] ? "dot dotVermelho" : "dot dotCinza");
+    document.querySelector('#status-led-19').className = (resposta.leds['19'] ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-led-12').className = (resposta.leds['12'] ? "dot dotVermelho" : "dot dotCinza");
+    document.querySelector('#status-led-10').className = (resposta.leds['10'] ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-led-18').className = (resposta.leds['18'] ? "dot dotVermelho" : "dot dotCinza");
+    document.querySelector('#status-led-16').className = (resposta.leds['16'] ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-led-38').className = (resposta.leds['38'] ? "dot dotVermelho" : "dot dotCinza");
+    document.querySelector('#status-led-40').className = (resposta.leds['40'] ? "dot dotVerde" : "dot dotCinza");
+
+    // reed bicicleta
+    document.querySelector('#status-reed-bicicleta').className = (resposta.bicicleta ? "dot dotVerde" : "dot dotCinza");
+
+    // sensores de cartão geladeira, microondas e lavadora
+    document.querySelector('#status-cartao-geladeira').className = (resposta.cartao_geladeira ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-cartao-microondas').className = (resposta.cartao_microondas ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-cartao-lavadora').className = (resposta.cartao_lavadora ? "dot dotVerde" : "dot dotCinza");
+}
+
 function requestStatus() {
     var xhttp = new XMLHttpRequest();
     var url = "ajaxdebugstatus";
@@ -113,31 +139,7 @@ function requestStatus() {
             var resposta = JSON.parse(this.responseText);
 
             //console.log(resposta);
-
-            // Sequência de LEDs: 37 35 21 23 29 24 15 19 12 10 18 16 38 40            
-            document.querySelector('#status-led-37').className = (resposta.leds['37'] ? "dot dotVermelho" : "dot dotCinza");
-            document.querySelector('#status-led-35').className = (resposta.leds['35'] ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-led-21').className = (resposta.leds['21'] ? "dot dotVermelho" : "dot dotCinza");
-            document.querySelector('#status-led-23').className = (resposta.leds['23'] ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-led-29').className = (resposta.leds['29'] ? "dot dotVermelho" : "dot dotCinza");
-            document.querySelector('#status-led-24').className = (resposta.leds['24'] ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-led-15').className = (resposta.leds['15'] ? "dot dotVermelho" : "dot dotCinza");
-            document.querySelector('#status-led-19').className = (resposta.leds['19'] ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-led-12').className = (resposta.leds['12'] ? "dot dotVermelho" : "dot dotCinza");
-            document.querySelector('#status-led-10').className = (resposta.leds['10'] ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-led-18').className = (resposta.leds['18'] ? "dot dotVermelho" : "dot dotCinza");
-            document.querySelector('#status-led-16').className = (resposta.leds['16'] ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-led-38').className = (resposta.leds['38'] ? "dot dotVermelho" : "dot dotCinza");
-            document.querySelector('#status-led-40').className = (resposta.leds['40'] ? "dot dotVerde" : "dot dotCinza");
-
-            // reed bicicleta
-            document.querySelector('#status-reed-bicicleta').className = (resposta.bicicleta ? "dot dotVerde" : "dot dotCinza");
-
-            // sensores de cartão geladeira, microondas e lavadora
-            document.querySelector('#status-cartao-geladeira').className = (resposta.cartao_geladeira ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-cartao-microondas').className = (resposta.cartao_microondas ? "dot dotVerde" : "dot dotCinza");
-            document.querySelector('#status-cartao-lavadora').className = (resposta.cartao_lavadora ? "dot dotVerde" : "dot dotCinza");
-
+            updateStatus(resposta);
         }
     }
     xhttp.open("GET",url,true);
