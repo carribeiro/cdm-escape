@@ -10,6 +10,10 @@ echo "--> (cdmvenv) Iniciado!"
 
 echo "Iniciando o servidor Django"
 echo "192.168.10.151:8000/"
+# muda para a pasta default
+cd /home/pi/cdmescape
+# pasta de desenvolvimento
+cd /home/pi/cdm-dev/cdm-escape
 # Inicia o servidor usando o manage.py, no IP 192.168.10.151:8000
-python3 /home/pi/cdmescape/cdmserver/manage.py runserver 192.168.10.151:8000
+python3 ./cdmserver/manage.py runserver 192.168.10.151:8000
 echo ""
