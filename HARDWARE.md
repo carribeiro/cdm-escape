@@ -112,14 +112,34 @@ def pulso_abrir_gaveta():
 
 # Lógica 6
 
+```
     # GPIO's
     gpio_etiquetaGeladeira = 36 # 36 Raspberry
     gpio_etiquetaMicroondas = 33 # 33 Raspberry
     gp_etiquetaMaquina = 4 # GPB4 (MCP23017)
 
-    ## Geladeira 40 e 38
-    gpio_ledVermelho = 38
-    gpio_ledVerde = 40
+    GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
+    GPIO.setwarnings(False) # Desativa avisos
+    GPIO.setup(cls.gpio_etiquetaGeladeira, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+    GPIO.setup(cls.gpio_etiquetaMicroondas, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+    mcp.setup(cls.gp_etiquetaMaquina, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Etiqueta maquina
 
+    leituraGel = GPIO.input(cls.gpio_etiquetaGeladeira)
+    leituraMic = GPIO.input(cls.gpio_etiquetaMicroondas)
+    leituraMaq = mcp.input(cls.gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1)
+```
+
+```
     # Relés
     gp_travaGeladeira = 6 # GPB6 (MCP23017)
+
+    # Loop pois a trava causa disturbio no sistema
+    for i in range(1):
+        # Garantir que o pino esta como OUTPUT
+        mcp.setup(cls.gp_travaGeladeira , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        
+        # Em nivel Baixo acionando o Rele
+        mcp.output(cls.gp_travaGeladeira, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        time.sleep(0.75)
+
+```
