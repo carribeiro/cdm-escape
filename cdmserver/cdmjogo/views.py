@@ -1,3 +1,7 @@
+## VIEWS.PY
+
+import os # Modulo para comandos shell linux
+import time
 from django.shortcuts import render
 #from django.http import HttpResponse
 from django.http import JsonResponse
@@ -10,9 +14,7 @@ from cdmjogo.classes.logica_8 import Logica_8
 from cdmjogo.classes.logica_9 import Logica_9
 from cdmjogo.classes.logica_1011 import Logica_1011
 from cdmjogo.classes.logica_1213 import Logica_1213
-import os # Modulo para comandos shell linux
 from cdmjogo.classes.mcp23017 import MCP23017 as mcp
-import time
 
 # View para retornar a pagina index.html para o cliente
 def index(request):
@@ -185,25 +187,30 @@ from cdmjogo.classes.mcp23017 import MCP23017 as mcp
 lista_leds = [37, 35, 21, 23, 29, 24, 15, 19, 12, 10, 18, 16, 38, 40]
 
 status_leds = {
-    37: False, # Divisoria Vermelho (37)
-    35: False, # Divisoria Verde (35)
-    21: False, # Gaveta Inferior Vermelho (21)
-    23: False, # Gaveta Inferior Verde (23)
-    29: False, # Acima Microondas Vermelho (29)
-    24: False, # Acima Microondas Verde (24)
-    15: False, # Pia Vermelho (15)
-    19: False, # Pia Verde = (19)
-    12: False, # Aparador Vermelho (12)
-    10: False, # Aparador Verde (10)
-    18: False, # Baú Vermelho (18)
-    16: False, # Baú Verde (16)
-    38: False, # Geladeira Vermelho (38)
-    40: False, # Geladeira Verde (40)
+    '37': False, # Divisoria Vermelho (37)
+    '35': False, # Divisoria Verde (35)
+    '21': False, # Gaveta Inferior Vermelho (21)
+    '23': False, # Gaveta Inferior Verde (23)
+    '29': False, # Acima Microondas Vermelho (29)
+    '24': False, # Acima Microondas Verde (24)
+    '15': False, # Pia Vermelho (15)
+    '19': False, # Pia Verde = (19)
+    '12': False, # Aparador Vermelho (12)
+    '10': False, # Aparador Verde (10)
+    '18': False, # Baú Vermelho (18)
+    '16': False, # Baú Verde (16)
+    '38': False, # Geladeira Vermelho (38)
+    '40': False, # Geladeira Verde (40)
 }
+
+def read_status_reed_bicicleta():
+    gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017)
+    mcp.setup(gp_reedSwitchBicicleta, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
+    leitura = mcp.input(gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)    
 
 def ajaxdebugstatus(request):
     # 37 35 21 23 29 24 15 19 12 10 18 16 38 40      
-    dicionario_json = { 'leds': status_leds }
+    dicionario_json = { 'leds': status_leds, 'bicicleta': read_status_reed_bicicleta()}
     return JsonResponse(dicionario_json)
 
 def resetleds(request):
@@ -212,9 +219,9 @@ def resetleds(request):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setwarnings(False)
         for led in lista_leds:
-            status_leds[led] = False
+            status_leds[str(led)] = False
             GPIO.setup(led, GPIO.OUT)
-            GPIO.output(status_leds[led], GPIO.LOW)            
+            GPIO.output(led, GPIO.LOW)            
 
     dicionario_json = {
         'retorno': 'resetleds, OK!'
@@ -223,18 +230,18 @@ def resetleds(request):
     return JsonResponse(dicionario_json)
 
 def setledhi(request):
-    dicionario_json = {
-        'retorno': 'setledhi = FAIL!'
+    dicionario_json = {        'retorno': 'setledhi = FAIL!'
     }
     if request.method == 'GET':
         led = request.GET.get('led', None)
 
         if led in status_leds:
             # Configura as GPIOs como BOARD, Contagem de 0 a 40
+            led_num = int(led)
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
-            GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, not(GPIO.HIGH) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
+            GPIO.setup(led_num, GPIO.OUT)
+            GPIO.output(led_num, not(GPIO.HIGH) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
             status_leds[led] = True
 
             dicionario_json = {
@@ -252,10 +259,11 @@ def setledlo(request):
 
         if led in status_leds:
             # Configura as GPIOs como BOARD, Contagem de 0 a 40
+            led_num = int(led)
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
-            GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, not(GPIO.LOW) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
+            GPIO.setup(led_num, GPIO.OUT)
+            GPIO.output(led_num, not(GPIO.LOW) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
             status_leds[led] = False
 
             dicionario_json = {
@@ -264,3 +272,70 @@ def setledlo(request):
 
     return JsonResponse(dicionario_json)
 
+spot_codes = {
+    '0b1101': 0b1101, # blackout
+    '0b0010': 0b0010, # sppot bike
+    '0b0011': 0b0011, # spot gaveta gozinha
+}
+
+def setspotcode(request):
+    dicionario_json = {
+        'retorno': 'setspotcode = FAIL!'
+    }
+    if request.method == 'GET':
+        spot_code = request.GET.get('spot_code', None)
+
+        if spot_code in spot_codes:
+            mcp.escreverBinarioLuzes(spot_codes[spot_code])
+            dicionario_json = {
+                'retorno': 'setspotcode = PASSED!'
+            }
+
+    return JsonResponse(dicionario_json)
+
+def setbateria(request):
+    dicionario_json = {
+        'retorno': 'setbateria = FAIL!'
+    }
+    if request.method == 'GET':
+        nivel = request.GET.get('nivel', None)
+
+        if nivel in ['0','1','2','3','4']]:
+            gp_barraLed = [2,3,4,5] # GPA5, GPA4, GPA3, GPA2 (MCP23017)
+            nivel_leds = {
+                '0': [mcp.HIGH, mcp.HIGH, mcp.HIGH, mcp.HIGH], 
+                '1': [mcp.LOW,  mcp.HIGH, mcp.HIGH, mcp.HIGH], 
+                '2': [mcp.LOW,  mcp.LOW,  mcp.HIGH, mcp.HIGH], 
+                '3': [mcp.LOW,  mcp.LOW,  mcp.LOW,  mcp.HIGH], 
+                '4': [mcp.LOW,  mcp.LOW,  mcp.LOW,  mcp.LOW], 
+            }
+
+            mcp.setup(gp_barraLed[0], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+            mcp.setup(gp_barraLed[1], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+            mcp.setup(gp_barraLed[2], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+            mcp.setup(gp_barraLed[3], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+
+            mcp.output(cls.gp_barraLed[0], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
+            mcp.output(cls.gp_barraLed[1], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
+            mcp.output(cls.gp_barraLed[2], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
+            mcp.output(cls.gp_barraLed[3], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
+
+            dicionario_json = {
+                'retorno': 'setbateria = PASSED!'
+            }
+
+    return JsonResponse(dicionario_json)
+
+def pulso_abrir_gaveta():
+
+    # trava da gaveta do armário é o sinal 4 da GPB (MCP23017)
+    gp_travaGaveta = 4 #GPB4 (MCP23017)
+
+    # Garantir que o pino esta como OUTPUT
+    mcp.setup(gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+    
+    # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
+    # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
+    mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+    time.sleep(1)
+    mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)

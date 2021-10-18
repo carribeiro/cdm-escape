@@ -16,7 +16,11 @@ urlpatterns = [
 
     path('ajaxdebugstatus', views.ajaxdebugstatus, name='ajaxdebugstatus'), # O ajax usara para chama a view ajaxdebugstatus
 
-    path('resetleds', views.setledhi, name='resetleds'), 
+    # URLs exclusivas para DEBUG; TODO: criar uma única thread de DEBUG associada a chamadas AJAX para executar em background
+    path('resetleds', views.resetleds, name='resetleds'), 
     path('setledhi', views.setledhi, name='setledhi'), 
     path('setledlo', views.setledlo, name='setledlo'), 
+    path('setspotcode', views.setspotcode, name='setspotcode'), 
+    path('setbateria', views.setbateria, name='setbateria'), 
+    path('pulso_abrir_gaveta', views.pulso_abrir_gaveta, name='pulso_abrir_gaveta'), 
 ]

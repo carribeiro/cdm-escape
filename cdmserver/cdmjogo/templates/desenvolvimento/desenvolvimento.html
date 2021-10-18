@@ -116,5 +116,43 @@
         </tr>
       </tbody>
     </table>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Código SPOT</th>
+          <th scope="col">Status</th>
+          <th scope="col">Enviar código</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <th scope="row">Blackout (0b1101)</th>
+            <td><span id="status-spot-blackout" class="dot dotCinza"></span></td>
+            <td><button id="btn-spot-blackout" type="button" class="btn btn-info">ENVIAR</button></td>
+        </tr>
+        <tr>
+            <th scope="row">Spot Bike (0b0010)</th>
+            <td><span id="status-spot-bike" class="dot dotCinza"></span></td>
+            <td><button id="btn-spot-bike" type="button" class="btn btn-info">ENVIAR</button></td>
+        </tr>
+        <tr>
+            <th scope="row">Spot Gaveta Cozinha (0b0011)</th>
+            <td><span id="status-spot-gaveta-cozinha" class="dot dotCinza"></span></td>
+            <td><button id="btn-spot-gaveta-cozinha" type="button" class="btn btn-info">ENVIAR</button></td>
+        </tr>
+        <tr>
+            <th scope="row">Níveis Bike</th>
+            <td><span id="status-bateria-bike" class="dot dotCinza"></span></td>
+            <td>
+                <button id="btn-bateria-bike-1" type="button" class="btn btn-info">1</button>
+                <button id="btn-bateria-bike-2" type="button" class="btn btn-info">2</button>
+                <button id="btn-bateria-bike-3" type="button" class="btn btn-info">3</button>
+                <button id="btn-bateria-bike-4" type="button" class="btn btn-info">4</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
 </body>
 </html>
