@@ -267,7 +267,7 @@ def setledhi(request):
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
             GPIO.setup(led_num, GPIO.OUT)
-            GPIO.output(led_num, not(GPIO.HIGH) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
+            GPIO.output(led_num, not(GPIO.HIGH)) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
             status_leds[led] = True
 
             dicionario_json = {
@@ -289,7 +289,7 @@ def setledlo(request):
             GPIO.setmode(GPIO.BOARD)
             GPIO.setwarnings(False)
             GPIO.setup(led_num, GPIO.OUT)
-            GPIO.output(led_num, not(GPIO.LOW) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
+            GPIO.output(led_num, not(GPIO.LOW)) # atenção, saída invertida; HIGH apaga, LOW acende (veja o 'not()')
             status_leds[led] = False
 
             dicionario_json = {
