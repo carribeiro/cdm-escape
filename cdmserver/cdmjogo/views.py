@@ -266,7 +266,7 @@ def setleds(request):
             GPIO.output(led, not(GPIO.HI))
 
     dicionario_json = {
-        'retorno': 'resetleds, OK!'
+        'retorno': 'setleds, OK!'
     }
 
     return JsonResponse(dicionario_json)
