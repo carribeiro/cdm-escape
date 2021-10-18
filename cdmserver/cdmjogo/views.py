@@ -247,13 +247,30 @@ def resetleds(request):
         for led in lista_leds:
             status_leds[str(led)] = False
             GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, GPIO.LOW)            
+            GPIO.output(led, not(GPIO.LOW))
 
     dicionario_json = {
         'retorno': 'resetleds, OK!'
     }
 
     return JsonResponse(dicionario_json)
+
+def setleds(request):
+    if request.method == 'GET':
+        # Configura as GPIOs como BOARD, Contagem de 0 a 40
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
+        for led in lista_leds:
+            status_leds[str(led)] = True
+            GPIO.setup(led, GPIO.OUT)
+            GPIO.output(led, not(GPIO.HI))
+
+    dicionario_json = {
+        'retorno': 'resetleds, OK!'
+    }
+
+    return JsonResponse(dicionario_json)
+
 
 def setledhi(request):
     dicionario_json = {        'retorno': 'setledhi = FAIL!'

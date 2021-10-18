@@ -3,6 +3,11 @@
 
 // const spanMsg = document.querySelector('#span-msg'); // Span Jogo: Parado, Jogando
 
+const btn_set_leds = document.querySelector('#btn-set-leds')
+btn_set_leds.addEventListener('click', function(){
+    requestSetLeds();
+});
+
 const btn_reset_leds = document.querySelector('#btn-reset-leds')
 btn_reset_leds.addEventListener('click', function(){
     requestResetLeds();
@@ -142,6 +147,21 @@ function requestStatus() {
 function requestResetLeds(){
     var xhttp = new XMLHttpRequest();
     var url = "resetleds";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+}
+
+function requestSetLeds(){
+    var xhttp = new XMLHttpRequest();
+    var url = "setleds";
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
