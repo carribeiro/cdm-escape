@@ -11,22 +11,41 @@
     <title>::Desenvolvimento::</title>
 </head>
 <body>
-    <h1>Pagina de DEBUG - Desenvolvimento</h1>
-    
-    <h2>Acesso aos Ajax</h2>
-    <ul>
-        <li><a href="/ajaxhistoria1">ajaxhistoria1</a></li>
-        <li><a href="/ajaxhistoria2">ajaxhistoria2</a> </li>
-        <li><a href="/ajaxdesenvolvimento">ajaxdesenvolvimento</a></li>
-        <li><button id="btn-reset-leds" type="button" class="btn btn-info">RESET LEDs</button></li>
-    </ul>
+    <h1>Pagina de DEBUG - Desenvolvimento</h1>   
+    <button id="btn-reset-leds" type="button" class="btn btn-info">RESET LEDs</button>
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">LED</th>
-          <th scope="col">Status</th>
-          <th scope="col">Ligar</th>
-          <th scope="col">Desligar</th>
+            <th scope="col">Sensor</th>
+            <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <th scope="row">Reed da bicicleta</th>
+            <td><span id="status-reed-bicicleta" class="dot dotCinza"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">Cartão geladeira</th>
+            <td><span id="status-cartao-geladeira" class="dot dotCinza"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">Cartão microondas</th>
+            <td><span id="status-cartao-microondas" class="dot dotCinza"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">Cartão lavadora</th>
+            <td><span id="status-cartao-lavadora" class="dot dotCinza"></span></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+            <th scope="col">LED</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ligar</th>
+            <th scope="col">Desligar</th>
         </tr>
       </thead>
       <tbody>
@@ -140,6 +159,11 @@
             <th scope="row">Spot Gaveta Cozinha (0b0011)</th>
             <td><span id="status-spot-gaveta-cozinha" class="dot dotCinza"></span></td>
             <td><button id="btn-spot-gaveta-cozinha" type="button" class="btn btn-info">ENVIAR</button></td>
+        </tr>
+        <tr>
+            <th scope="row">Spot Geladeira (0b0100)</th>
+            <td><span id="status-spot-geladeira" class="dot dotCinza"></span></td>
+            <td><button id="btn-spot-geladeira" type="button" class="btn btn-info">ENVIAR</button></td>
         </tr>
         <tr>
             <th scope="row">Níveis Bike</th>

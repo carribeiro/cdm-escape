@@ -206,11 +206,37 @@ status_leds = {
 def read_status_reed_bicicleta():
     gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017)
     mcp.setup(gp_reedSwitchBicicleta, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
-    leitura = mcp.input(gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)    
+    return mcp.input(gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)    
+
+def read_status_cartoes():
+    # lê os três cartões RFID; cada um possui uma leitura com um arduíno interno que comunica por 
+    # um único pino com o Raspberry Pi, indicando que tem o cartão certo ou não.
+
+    gpio_etiquetaGeladeira = 36 # sinal GPIO 36 Raspberry
+    gpio_etiquetaMicroondas = 33 # sinal GPIO 33 Raspberry
+    gp_etiquetaMaquina = 4 # sinal GPB4 da expansão MCP23017
+
+    GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
+    GPIO.setwarnings(False) # Desativa avisos
+    GPIO.setup(gpio_etiquetaGeladeira, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+    GPIO.setup(gpio_etiquetaMicroondas, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+    mcp.setup(gp_etiquetaMaquina, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Etiqueta maquina
+
+    cartao_geladeira = GPIO.input(cls.gpio_etiquetaGeladeira)
+    cartao_microondas = GPIO.input(cls.gpio_etiquetaMicroondas)
+    cartao_lavadora = mcp.input(cls.gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1)
+
+    return cartao_geladeira, cartao_microondas, cartao_lavadora
 
 def ajaxdebugstatus(request):
-    # 37 35 21 23 29 24 15 19 12 10 18 16 38 40      
-    dicionario_json = { 'leds': status_leds, 'bicicleta': read_status_reed_bicicleta()}
+    cartao_geladeira, cartao_microondas, cartao_lavadora = read_status_cartoes()
+    dicionario_json = { 
+        'leds': status_leds, 
+        'bicicleta': read_status_reed_bicicleta(), 
+        'cartao_geladeira': cartao_geladeira,
+        'cartao_microondas': cartao_microondas,
+        'cartao_lavadora': cartao_lavadora,
+    }
     return JsonResponse(dicionario_json)
 
 def resetleds(request):
@@ -276,6 +302,7 @@ spot_codes = {
     '0b1101': 0b1101, # blackout
     '0b0010': 0b0010, # sppot bike
     '0b0011': 0b0011, # spot gaveta gozinha
+    '0b0100': 0b0100, # spot geladeira
 }
 
 def setspotcode(request):
