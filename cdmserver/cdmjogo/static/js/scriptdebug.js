@@ -8,6 +8,12 @@ btn_reset_leds.addEventListener('click', function(){
     requestResetLeds();
 });
 
+const btn_refresh_status.querySelector('#btn-refresh-status')
+btn_refresh_status, function(){
+    requestStatus();
+});
+
+
 const btn_led_37_hi = document.querySelector('#btn-led-37-hi')
 const btn_led_37_lo = document.querySelector('#btn-led-37-lo')
 const btn_led_35_hi = document.querySelector('#btn-led-35-hi')
@@ -94,7 +100,7 @@ btn_bateria_bike_4.addEventListener('click', function(){ requestSetBateria(4); }
 
 // Chamada Ajax para atualizar status dos LEDs
 
-function requestStatusLeds() {
+function requestStatus() {
     var xhttp = new XMLHttpRequest();
     var url = "ajaxdebugstatus";
     xhttp.onreadystatechange = function(){
