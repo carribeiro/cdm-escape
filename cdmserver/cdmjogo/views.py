@@ -331,7 +331,7 @@ def setbateria(request):
 
         if nivel in ['0','1','2','3','4']:
             gp_barraLed = [2,3,4,5] # GPA5, GPA4, GPA3, GPA2 (MCP23017)
-            nivel_leds = {
+            nivel_bateria = {
                 '0': [mcp.HIGH, mcp.HIGH, mcp.HIGH, mcp.HIGH], 
                 '1': [mcp.LOW,  mcp.HIGH, mcp.HIGH, mcp.HIGH], 
                 '2': [mcp.LOW,  mcp.LOW,  mcp.HIGH, mcp.HIGH], 
