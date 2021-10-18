@@ -109,3 +109,17 @@ def pulso_abrir_gaveta():
     # Relés
     gp_travaBau = 6 # GPA6 (MCP23017)
 
+
+# Lógica 6
+
+    # GPIO's
+    gpio_etiquetaGeladeira = 36 # 36 Raspberry
+    gpio_etiquetaMicroondas = 33 # 33 Raspberry
+    gp_etiquetaMaquina = 4 # GPB4 (MCP23017)
+
+    ## Geladeira 40 e 38
+    gpio_ledVermelho = 38
+    gpio_ledVerde = 40
+
+    # Relés
+    gp_travaGeladeira = 6 # GPB6 (MCP23017)
