@@ -9,7 +9,7 @@ btn_reset_leds.addEventListener('click', function(){
 });
 
 const btn_refresh_status.querySelector('#btn-refresh-status')
-btn_refresh_status, function(){
+btn_refresh_status.addEventListener('click', function(){
     requestStatus();
 });
 
