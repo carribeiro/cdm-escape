@@ -149,3 +149,9 @@ def pulso_abrir_gaveta():
 ```
 mcp.escreverBinarioLuzes(0b0101) # Codigo do Spot do banheiro
 ```
+
+# Lógica 8
+
+```
+mcp.escreverBinarioLuzes(0b0110) # Codigo do Spot da lavanderia e pia do banheiro
+```
