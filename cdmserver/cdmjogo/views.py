@@ -263,7 +263,7 @@ def setleds(request):
         for led in lista_leds:
             status_leds[str(led)] = True
             GPIO.setup(led, GPIO.OUT)
-            GPIO.output(led, not(GPIO.HI))
+            GPIO.output(led, not(GPIO.HIGH))
 
     dicionario_json = {
         'retorno': 'setleds, OK!'
