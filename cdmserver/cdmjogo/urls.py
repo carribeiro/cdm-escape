@@ -18,7 +18,7 @@ urlpatterns = [
 
     # URLs exclusivas para DEBUG; TODO: criar uma única thread de DEBUG associada a chamadas AJAX para executar em background
     path('resetleds', views.resetleds, name='resetleds'), 
-    path('setleds', views.resetleds, name='setleds'), 
+    path('setleds', views.setleds, name='setleds'), 
     path('setledhi', views.setledhi, name='setledhi'), 
     path('setledlo', views.setledlo, name='setledlo'), 
     path('setspotcode', views.setspotcode, name='setspotcode'), 
