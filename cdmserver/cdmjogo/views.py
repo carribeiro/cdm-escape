@@ -222,9 +222,9 @@ def read_status_cartoes():
     GPIO.setup(gpio_etiquetaMicroondas, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
     mcp.setup(gp_etiquetaMaquina, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Etiqueta maquina
 
-    cartao_geladeira = GPIO.input(cls.gpio_etiquetaGeladeira)
-    cartao_microondas = GPIO.input(cls.gpio_etiquetaMicroondas)
-    cartao_lavadora = mcp.input(cls.gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1)
+    cartao_geladeira = GPIO.input(gpio_etiquetaGeladeira)
+    cartao_microondas = GPIO.input(gpio_etiquetaMicroondas)
+    cartao_lavadora = mcp.input(gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1)
 
     return cartao_geladeira, cartao_microondas, cartao_lavadora
 
