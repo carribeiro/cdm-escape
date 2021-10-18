@@ -25,6 +25,10 @@ faz com que queries de DNS falhem de vez em quando e a performance seja ruim.
 
 WiFi habilitado através da interface gráfica via VNC.
 
+SSID: WIFI-QUADRA
+
+Senha: $$cdmquadra$$
+
 ## Setar DNS corretamente
 
 O DNS dos Raspberry Pi estava apontando para IPs internos da rede, mas não funciona quando está no WiFi. Provavelmente é um resto de configuração do ambiente de desenvolvimento original.
