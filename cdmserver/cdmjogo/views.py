@@ -246,12 +246,15 @@ def read_status_cartoes():
     return status_cartao_geladeira, status_cartao_microondas, status_cartao_lavadora
 
 def resetcartaogeladeira():
+    global status_cartao_geladeira
     status_cartao_geladeira = False
 
 def resetcartaomicroondas():
+    global status_cartao_microondas
     status_cartao_microondas = False
 
 def resetcartaolavadora():
+    global status_cartao_lavadora
     status_cartao_lavadora = False
 
 def ajaxdebugstatus(request):
