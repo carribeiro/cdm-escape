@@ -454,7 +454,7 @@ def pulso_abrir_banheiro(request):
         mcp.setup(gp_travaPortaBanheiro , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
         
         # Em nivel Baixo acionando o Rele
-        mcp.output(gp_travaPortaBanheiro, mcp.GPB, (operacao == 'ABRIR') ? mcp.LOW : mcp.HIGH, mcp.ADDRESS2)
+        mcp.output(gp_travaPortaBanheiro, mcp.GPB, mcp.LOW if (operacao == 'ABRIR') else mcp.HIGH, mcp.ADDRESS2)
         time.sleep(0.75)
 
 def pulso_fechar_banheiro(request):
