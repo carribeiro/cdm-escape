@@ -602,5 +602,26 @@ def read_sensores_banheiro():
 
     print("SENSORES BANHEIRO:", ldr_pia, ldr_chuveiro, seletor_verao)
 
+    if (ldr_pia):
+        mcp.setup(cls.gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.output(cls.gp_fitaLedPia, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    else:
+        mcp.setup(cls.gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.output(cls.gp_fitaLedPia, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+
+    if (ldr_chuveiro):
+        mcp.setup(cls.gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+        mcp.output(cls.gp_fitaLedChuveiro, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
+    else:
+        mcp.setup(cls.gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+        mcp.output(cls.gp_fitaLedChuveiro, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
+
+    if (seletor_verao):
+        mcp.setup(cls.gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.output(cls.gp_ledVermelhoChuveiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    else:
+        mcp.setup(cls.gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.output(cls.gp_ledVermelhoChuveiro, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+
     return ldr_pia, ldr_chuveiro, seletor_verao
 
