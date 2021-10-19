@@ -623,7 +623,7 @@ def read_sensores_banheiro():
 
     if (seletor_verao):
         mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.LO, mcp.ADDRESS2)
+        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
     else:
         mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
         mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
