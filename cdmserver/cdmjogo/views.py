@@ -408,7 +408,7 @@ def setbateria(request):
 
     return JsonResponse(dicionario_json)
 
-def pulso_abrir_gaveta_cozinha():
+def pulso_abrir_gaveta_cozinha(request):
 
     # trava da gaveta do armário é o sinal 4 da GPB (MCP23017)
     gp_travaGaveta = 4 #GPB4 (MCP23017)
@@ -422,27 +422,23 @@ def pulso_abrir_gaveta_cozinha():
     time.sleep(1)
     mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
 
-def pulso_abrir_banheiro():
+def pulso_abrir_gaveta_banheiro(request):
     #
     pass
 
-def pulso_abrir_gaveta_banheiro():
+def pulso_abrir_geladeira(request):
     #
     pass
 
-def pulso_abrir_geladeira():
+def pulso_abrir_armario_cozinha(request):
     #
     pass
 
-def pulso_abrir_armario_cozinha():
+def pulso_abrir_bau(request):
     #
     pass
 
-def pulso_abrir_bau():
-    #
-    pass
-
-def pulso_abrir_banheiro():
+def pulso_abrir_banheiro(request):
     # variáveis de IO
     gp_ledsJogoGeladeira = 7 #GPB7
     gp_travaPortaBanheiro = 3 # GPB3 (MCP23017)
