@@ -234,6 +234,7 @@ def read_status_cartoes():
     cartao_microondas = not(GPIO.input(gpio_etiquetaMicroondas))
     cartao_lavadora = not(mcp.input(gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1))
 
+    print("Cartões (G/M/L):", cartao_geladeira, cartao_microondas, cartao_lavadora)
     global status_cartao_geladeira
     global status_cartao_microondas
     global status_cartao_lavadora
@@ -245,15 +246,15 @@ def read_status_cartoes():
 
     return status_cartao_geladeira, status_cartao_microondas, status_cartao_lavadora
 
-def resetcartaogeladeira():
+def resetcartaogeladeira(request):
     global status_cartao_geladeira
     status_cartao_geladeira = False
 
-def resetcartaomicroondas():
+def resetcartaomicroondas(request):
     global status_cartao_microondas
     status_cartao_microondas = False
 
-def resetcartaolavadora():
+def resetcartaolavadora(request):
     global status_cartao_lavadora
     status_cartao_lavadora = False
 
@@ -608,24 +609,24 @@ def read_sensores_banheiro():
 
     if (ldr_pia):
         mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedPia, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+        mcp.output(gp_fitaLedPia, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
     else:
         mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedPia, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        mcp.output(gp_fitaLedPia, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
 
     if (ldr_chuveiro):
         mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
+        mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
     else:
         mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
+        mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
 
     if (seletor_verao):
         mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.LO, mcp.ADDRESS2)
     else:
         mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
 
     return ldr_pia, ldr_chuveiro, seletor_verao
 
