@@ -585,6 +585,10 @@ def read_sensores_banheiro():
     gpio_registroChuveiro = 7 # Pino do estado do registro chuveiro (rasperry)
     gpio_veraoChuveiro = 11 # Pino para leitura do estado do verão do chuveiro (rasperry)
 
+    gp_fitaLedPia = 1 # GPB1 (MCP23017)
+    gp_fitaLedChuveiro = 1 # GPA1 (MCP23017)
+    gp_ledVermelhoChuveiro = 0 # GPB0 (MCP23017)
+
     # Configurar os registradores
     mcp.confRegistradoresBanheiroAberto()
 
