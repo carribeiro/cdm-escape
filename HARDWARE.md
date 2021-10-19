@@ -7,6 +7,14 @@ As tomadas em série do armário estão na GPIO
 
 São dois conjuntos no MCP; GPA e GPB
 
+Existem alguns sistemas Arduino independentes que se comunicam com a central de automação.
+Entre eles, a caixa de automação do sistema de iluminação tem um arduíno e bancos próprios
+de relés com chaves em paralelo para comando de cada luz. O Raspberry Pi se comunica por
+meio de 4 bits apenas, para setar combinações de luzes para cada estágio do jogo. Isso foi 
+uma das pequenas surpresas do processo de "engenharia reversa" do jogo.
+
+
+
 # Lógica 1
 
 Constantes para acionar cada um dos LEDs da GPIO

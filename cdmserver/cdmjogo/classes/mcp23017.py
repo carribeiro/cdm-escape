@@ -5,6 +5,37 @@ Esta classe faz a comunicacao I2C com os extensores de porta MCP23017
 Conectados ao barramento I2C do raspberry
 """
 class MCP23017(object):
+    """
+    O MCP23017 é um expansor de IO com uma interface serial i2C ou SPI. Cada chip possui dois
+    bancos de pinos de IO: GPA0-GPA7 e GPB0-GPB7. Três linhas de endereço permitem selecionar 
+    o chip desejado em um barramento; desta forma, até 8 MCP23017 podem estar ligados ao mesmo
+    barramento.
+
+    O endereço é repassado nas mensagens i2C. O campo de endereço tem 4 bits com um ID fixo 
+    padrão 0b0100, que é um código que identifica um MCP23017. Desta forma ao endereçar o 
+    MCP23017, a identificação será entre 0b0100000 e 0b0100111, ou seja: 0x20 até 0x27.
+
+    O chip possui três pinos A0/A1/A2 que são setados por hardware no projeto da placa para 
+    responder nos endereços de 0 a 7.
+
+    A placa de controle da CDM possui dois chips MCP23017, sendo que um opera no endereço 0x22 
+    (ADDRESS1) e o outro no endereço 0x24 (ADDRESS2).
+
+    No total, a placa de expansão da CDM possui até 32 bits de IO disponíveis, além dos bits
+    da GPIO interna do Raspberry Pi.
+
+    As operações de leitura e escrita sempre operam em todos os 8 bits ao mesmo tempo; a 
+    máscara aplicada via IODIR especifica se o pino será usado para leitura ou para escrita 
+    naquela operação.
+
+    Desta forma, a cada operação, é necessário sempre fazer um "setup" dos pinos para em 
+    seguida usar uma mensagem de leitura e/ou escrita.
+
+    Referências:
+    - https://www.best-microcontroller-projects.com/mcp23017.html
+    - https://www.raspberrypi-spy.co.uk/2013/07/how-to-use-a-mcp23017-i2c-port-expander-with-the-raspberry-pi-part-2/
+    """
+
     # ATRIBUTOS DE CLASSE
     n_barramento = 0x01 # Numero do Barramento I2C do raspberry (No nosso caso é 1)
     ADDRESS1 = 0x22 # Endereco do primeiro chip MC23017 (Definido pela configuracao A0,A1,A2)
@@ -12,13 +43,14 @@ class MCP23017(object):
     barramento = None # Atributo que guarda a instancia do barramento
 
     # Enderecos de alguns registradores do chip MCP23017 em hexadecimal
-    # Etrada ou saida de dados, 0=OUTPUT e 1=INPUT
-    IODIRA = 0x00
-    IODIRB = 0x01
-    #Protecao contra oscilacao de pinos configurados como INPUT,
-    # 1=Resitor de 10k interno habilitado, 0=Desabilitado
-    GPPUA = 0x0C
-    GPPUB = 0x0D
+
+    # IODIR é o registro de configuração dos pinos para OUTPUT (bit 0) e INPUT (bit 1)
+    IODIRA = 0x00  
+    IODIRB = 0x01  
+    # Protecao contra oscilacao de pinos configurados como INPUT,
+    # 1=Resistor de 100k interno habilitado, 0=Desabilitado
+    GPPUA = 0x0C   
+    GPPUB = 0x0D   
     # Configuracao dos pino de INPUT como PULL UP ou PULL DOWN
     # 0=PULL DOWN , 1=PULL UP
     IPOLA = 0x02
@@ -28,10 +60,11 @@ class MCP23017(object):
     OLATA = 0x14
     OLATB = 0x15
     # Leitura dos pinos INPUT e OUTPUT, similar ao digitalRead do arduino
+    # Obs: confirmar se permite ler o status de um pino que foi escrito
     GPIOA = 0x12
     GPIOB = 0x13
-    # ------ FIM REGISTRADORES ------
 
+    # ------ FIM REGISTRADORES ------
     IN = 'IN' # Constante de entrada
     OUT = 'OUT' # Constante de saida
     LOW = 0 # Constante de nivel baixo
@@ -181,9 +214,19 @@ class MCP23017(object):
     def confRegistradores(cls):
         print('Escrevendo 0x00 em todos os registradores...')
         cls.instanciarBarramento()
+
+        #--------------------------------------------------------------
+        # MCP23017 #01 
         # Extensor 0x22
+
+        # GPA7 GPA6 GPA5 GPA4 GPA3 GPA2 GPA1 GPA0 = 0x0F
+        # out  out  out  out  in   in   in   in
         cls.barramento.write_byte_data(cls.ADDRESS1, cls.IODIRA, 0xF)
+
+        # GPB7 GPB6 GPB5 GPB4 GPB3 GPB2 GPB1 GPB0 = 0x0F
+        # in   in   in   in   in   in   in   in
         cls.barramento.write_byte_data(cls.ADDRESS1, cls.IODIRB, 0xFF)
+
         # cls.barramento.write_byte_data(cls.ADDRESS1, cls.GPPUA, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS1, cls.GPPUB, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS1, cls.IPOLA, 0x00)
@@ -192,15 +235,27 @@ class MCP23017(object):
         # cls.barramento.write_byte_data(cls.ADDRESS1, cls.OLATB, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS1, cls.GPIOA, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS1, cls.GPIOB, 0x00)
+
+        #--------------------------------------------------------------
+        # MCP23017 #02 
         # Extensor 0x24
+
+        # GPA7 GPA6 GPA5 GPA4 GPA3 GPA2 GPA1 GPA0 = 0x00
+        # out  out  out  out  out  out  out  out
         cls.barramento.write_byte_data(cls.ADDRESS2, cls.IODIRA, 0x00)
+
+        # GPB7 GPB6 GPB5 GPB4 GPB3 GPB2 GPB1 GPB0 = 0x00
+        # out  out  out  out  out  out  out  out
         cls.barramento.write_byte_data(cls.ADDRESS2, cls.IODIRB, 0x00)
+
+        # configura todos os "output latches" no modo HIGH (bits 1)
+        cls.barramento.write_byte_data(cls.ADDRESS2, cls.OLATA, 0xFF)
+        cls.barramento.write_byte_data(cls.ADDRESS2, cls.OLATB, 0xFF)
+
         # cls.barramento.write_byte_data(cls.ADDRESS2, cls.GPPUA, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS2, cls.GPPUB, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS2, cls.IPOLA, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS2, cls.IPOLB, 0x00)
-        cls.barramento.write_byte_data(cls.ADDRESS2, cls.OLATA, 0xFF)
-        cls.barramento.write_byte_data(cls.ADDRESS2, cls.OLATB, 0xFF)
         # cls.barramento.write_byte_data(cls.ADDRESS2, cls.GPIOA, 0x00)
         # cls.barramento.write_byte_data(cls.ADDRESS2, cls.GPIOB, 0x00)
         print('Escrita concluida!')
@@ -246,7 +301,7 @@ class MCP23017(object):
         print('Escrevendo 0xF no MCP 0x22')
         cls.instanciarBarramento()
         
-        # Extensor 0x22
+        # Configura o MCP 0x22 para entrada em 4 bits
         cls.barramento.write_byte_data(cls.ADDRESS1, cls.IODIRA, 0xF)
 
     @classmethod
@@ -255,6 +310,20 @@ class MCP23017(object):
         print("MCP: " + str(hex(codigoBin << 4)) + " - Arduino: " + str(bin(codigoBin)))
         cls.instanciarBarramento()
         
+        # nos exemplos do código, esta chamada vem DEPOIS de um confRegistradoresLuzes, 
+        # que seta os 4 bits altos do MCP 0x22 para saída. O códigoBin é então deslocado 
+        # 4 bits para a esquerda, ou seja -> ele sai nos bits GPA7-GPA4 do MCP 0x22.
+
+        # estes 4 bits são transmitidos para a caixa de controle de iluminação, que 
+        # possui um módulo interno com um Arduino Nano, que converte cada código de 
+        # estado de luz (4 bits, de 0b0000 a 0b1111) em uma configuração de spots
+        # acessos ou apagados. A consequência é que para mexer na sequência de luzes, 
+        # precisa reprogramar este Arduíno.
+
+        # Obs: não tem nenhum "bom motivo" pra usar representação binária pra ler 
+        # este valor, a não ser que seja para debugar com um multimetro o status dos 
+        # pinos de comunicação com o Arduíno do painel de iluminação.
+
         # Desloca o codigoBin em 4 bits para a direita e escreve no registrador
         cls.barramento.write_byte_data(cls.ADDRESS1, cls.OLATA, (codigoBin << 4))
 
