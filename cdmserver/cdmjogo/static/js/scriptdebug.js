@@ -83,6 +83,27 @@ btn_abrir_banheiro.addEventListener('click', function(){ requestPulsoBanheiro('A
 const btn_fechar_banheiro = document.querySelector('#btn-fechar-banheiro')
 btn_fechar_banheiro.addEventListener('click', function(){ requestPulsoBanheiro('FECHAR'); }); 
 
+const btn_abrir_geladeira = document.querySelector('#btn-abrir-geladeira')
+btn_abrir_geladeira.addEventListener('click', function(){ requestPulsoGeladeira('ABRIR'); }); 
+
+const btn_fechar_geladeira = document.querySelector('#btn-fechar-geladeira')
+btn_fechar_geladeira.addEventListener('click', function(){ requestPulsoGeladeira('FECHAR'); }); 
+
+const btn_pulso_gaveta_banheiro = document.querySelector('#btn-pulso-gaveta-banheiro')
+btn_pulso_gaveta_banheiro.addEventListener('click', function(){ requestPulsoGavetaBanheiro(); }); 
+
+const btn_pulso_gaveta_armario = document.querySelector('#btn-pulso-gaveta-armario')
+btn_pulso_gaveta_armario.addEventListener('click', function(){ requestPulsoGavetaArmario(); }); 
+
+const btn_pulso_porta_armario = document.querySelector('#btn-pulso-porta-armario')
+btn_pulso_porta_armario.addEventListener('click', function(){ requestPulsoPortaArmario(); }); 
+
+const btn_pulso_gaveta_aparador = document.querySelector('#btn-pulso-gaveta-aparador')
+btn_pulso_gaveta_aparador.addEventListener('click', function(){ requestPulsoGavetaAparador(); }); 
+
+const btn_pulso_bau = document.querySelector('#btn-pulso-bau')
+btn_pulso_bau.addEventListener('click', function(){ requestPulsoBau(); }); 
+
 const btn_spot_blackout = document.querySelector('#btn-spot-blackout')
 const btn_spot_bike = document.querySelector('#btn-spot-bike')
 const btn_spot_gaveta_cozinha = document.querySelector('#btn-spot-gaveta-cozinha')
@@ -307,6 +328,102 @@ function requestResetCartaoLavadora() {
 function requestPulsoBanheiro(operacao) {
     var xhttp = new XMLHttpRequest();
     var url = "pulso_abrir_banheiro?operacao=" + operacao;
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
+}
+
+function requestPulsoGeladeira(operacao) {
+    var xhttp = new XMLHttpRequest();
+    var url = "pulso_abrir_geladeira?operacao=" + operacao;
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
+}
+
+function requestPulsoGavetaBanheiro() {
+    var xhttp = new XMLHttpRequest();
+    var url = "pulso_abrir_gaveta_banheiro";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
+}
+
+function requestPulsoGavetaArmario() {
+    var xhttp = new XMLHttpRequest();
+    var url = "pulso_abrir_gaveta_armario";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
+}
+
+function requestPulsoPortaArmario() {
+    var xhttp = new XMLHttpRequest();
+    var url = "pulso_abrir_porta_armario";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
+}
+
+function requestPulsoGavetaAparador() {
+    var xhttp = new XMLHttpRequest();
+    var url = "pulso_abrir_gaveta_aparador";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
+}
+
+function requestPulsoBau() {
+    var xhttp = new XMLHttpRequest();
+    var url = "pulso_abrir_bau";
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){

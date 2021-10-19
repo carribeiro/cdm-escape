@@ -408,37 +408,10 @@ def setbateria(request):
 
     return JsonResponse(dicionario_json)
 
-def pulso_abrir_gaveta_cozinha(request):
-
-    # trava da gaveta do armário é o sinal 4 da GPB (MCP23017)
-    gp_travaGaveta = 4 #GPB4 (MCP23017)
-
-    # Garantir que o pino esta como OUTPUT
-    mcp.setup(gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-    
-    # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
-    # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
-    mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
-    time.sleep(1)
-    mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
-
-def pulso_abrir_gaveta_banheiro(request):
-    #
-    pass
-
-def pulso_abrir_geladeira(request):
-    #
-    pass
-
-def pulso_abrir_armario_cozinha(request):
-    #
-    pass
-
-def pulso_abrir_bau(request):
-    #
-    pass
-
 def pulso_abrir_banheiro(request):
+    dicionario_json = {
+        'retorno': 'Pulso abrir banheiro, REQUEST INVALIDO',
+    }
 
     # variáveis de IO
     gp_ledsJogoGeladeira = 7 #GPB7
@@ -463,16 +436,142 @@ def pulso_abrir_banheiro(request):
 
     return JsonResponse(dicionario_json)
 
-def pulso_fechar_banheiro(request):
-    # variáveis de IO
-    gp_ledsJogoGeladeira = 7 #GPB7
-    gp_travaPortaBanheiro = 3 # GPB3 (MCP23017)
+def pulso_abrir_geladeira(request):
+    dicionario_json = {
+        'retorno': 'Pulso abrir geladeira, REQUEST INVALIDO',
+    }
 
-    # Loop pois a trava causa disturbio no sistema
-    for i in range(1):
+    # variáveis de IO
+    gp_travaGeladeira = 6 # GPB6 (MCP23017)
+
+    if request.method == 'GET':
+        operacao = request.GET.get('operacao', None)
+        dicionario_json = {
+            'retorno': 'Pulso abrir geladeira, OK!' + operacao,
+        }
+
+        # Loop pois a trava causa disturbio no sistema
+        for i in range(1):
+            # Garantir que o pino esta como OUTPUT
+            mcp.setup(gp_travaGeladeira , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+    
+            opcode = mcp.LOW if (operacao == 'ABRIR') else mcp.HIGH
+            print('operacao='+operacao+' pulso='+str(i)+' opcode='+str(opcode))
+            # Em nivel Baixo acionando o Rele
+            mcp.output(gp_travaGeladeira, mcp.GPB, opcode, mcp.ADDRESS2)
+            time.sleep(0.75)
+
+    return JsonResponse(dicionario_json)
+
+def pulso_abrir_gaveta_banheiro(request):
+    dicionario_json = {
+        'retorno': 'Pulso abrir gaveta banheiro, REQUEST INVALIDO',
+    }
+
+    if request.method == 'GET':
+        dicionario_json = {
+            'retorno': 'Pulso abrir gaveta banheiro, OK!',
+        }
+
+        gp_travaGaveta = 2 # GPB2 (MCP23017)
+
         # Garantir que o pino esta como OUTPUT
-        mcp.setup(gp_travaPortaBanheiro , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.setup(gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
         
-        # Em nivel Baixo acionando o Rele
-        mcp.output(gp_travaPortaBanheiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
-        time.sleep(0.75)
+        # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
+        # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
+        mcp.output(gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        time.sleep(1)
+        mcp.output(gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    return JsonResponse(dicionario_json)
+
+def pulso_abrir_gaveta_armario(request):
+    dicionario_json = {
+        'retorno': 'Pulso abrir gaveta armario, REQUEST INVALIDO',
+    }
+
+    if request.method == 'GET':
+        dicionario_json = {
+            'retorno': 'Pulso abrir gaveta armario, OK!',
+        }
+
+        # trava da gaveta do armário é o sinal 4 da GPB (MCP23017)
+        gp_travaGaveta = 4 #GPB4 (MCP23017)
+
+        # Garantir que o pino esta como OUTPUT
+        mcp.setup(gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        
+        # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
+        # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
+        mcp.output(gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        time.sleep(1)
+        mcp.output(gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    return JsonResponse(dicionario_json)
+
+def pulso_abrir_porta_armario(request):
+    dicionario_json = {
+        'retorno': 'Pulso abrir porta armario, REQUEST INVALIDO',
+    }
+
+    if request.method == 'GET':
+        dicionario_json = {
+            'retorno': 'Pulso abrir porta armario, OK!',
+        }
+
+        gp_travaArmario = 5 # GPB5 (MCP23017)
+
+        # Garantir que o pino esta como OUTPUT
+        mcp.setup(gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        
+        # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
+        # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
+        mcp.output(gp_travaArmario, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        time.sleep(1)
+        mcp.output(gp_travaArmario, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    return JsonResponse(dicionario_json)
+
+def pulso_abrir_gaveta_aparador(request):
+    dicionario_json = {
+        'retorno': 'Pulso abrir gaveta aparador, REQUEST INVALIDO',
+    }
+
+    if request.method == 'GET':
+        dicionario_json = {
+            'retorno': 'Pulso abrir gaveta aparador, OK!',
+        }
+
+        gp_travaAparador = 7 # GPA7 (MCP23017)
+
+        # Garantir que o pino esta como OUTPUT
+        mcp.setup(gp_travaAparador , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        
+        # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
+        # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
+        mcp.output(gp_travaAparador, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        time.sleep(1)
+        mcp.output(gp_travaAparador, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    return JsonResponse(dicionario_json)
+
+def pulso_abrir_bau(request):
+    dicionario_json = {
+        'retorno': 'Pulso abrir bau, REQUEST INVALIDO',
+    }
+
+    if request.method == 'GET':
+        dicionario_json = {
+            'retorno': 'Pulso abrir bau, OK!',
+        }
+
+        gp_travaBau = 6 # GPA6 (MCP23017)
+
+        # Garantir que o pino esta como OUTPUT
+        mcp.setup(gp_travaBau , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        
+        # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
+        # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
+        mcp.output(gp_travaBau, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        time.sleep(1)
+        mcp.output(gp_travaBau, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    return JsonResponse(dicionario_json)
+
+
