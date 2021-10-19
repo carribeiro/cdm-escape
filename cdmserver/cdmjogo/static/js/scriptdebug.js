@@ -103,6 +103,14 @@ btn_bateria_bike_2.addEventListener('click', function(){ requestSetBateria(2); }
 btn_bateria_bike_3.addEventListener('click', function(){ requestSetBateria(3); }); 
 btn_bateria_bike_4.addEventListener('click', function(){ requestSetBateria(4); }); 
 
+const btn_reset_cartao_geladeira = document.querySelector('#btn-reset-cartao-geladeira')
+const btn_reset_cartao_microondas = document.querySelector('#btn-reset-cartao-microondas')
+const btn_reset_cartao_lavadora = document.querySelector('#btn-reset-cartao-lavadora')
+
+btn_reset_cartao_geladeira.addEventListener('click', function(){ requestResetCartaoGeladeira(); }); 
+btn_reset_cartao_microondas.addEventListener('click', function(){ requestResetCartaoMicroondas(); }); 
+btn_reset_cartao_lavadora.addEventListener('click', function(){ requestResetCartaoLavadora(); }); 
+
 // Chamada Ajax para atualizar status dos LEDs
 
 function updateStatus(resposta) {
@@ -234,4 +242,50 @@ function requestSetBateria(nivel){
     }
     xhttp.open("GET",url,true);
     xhttp.send()
+}
+
+function requestResetCartaoGeladeira() {
+    var xhttp = new XMLHttpRequest();
+    var url = "resetcartaogeladeira";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+}
+
+function requestResetCartaoMicroondas() {
+    var xhttp = new XMLHttpRequest();
+    var url = "resetcartaomicroondas";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+}
+
+function requestResetCartaoLavadora() {
+    var xhttp = new XMLHttpRequest();
+    var url = "resetcartaolavadora";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
 }

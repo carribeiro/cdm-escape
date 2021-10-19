@@ -211,6 +211,10 @@ def read_status_reed_bicicleta():
     mcp.setup(gp_reedSwitchBicicleta, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
     return mcp.input(gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)    
 
+status_cartao_geladeira = False
+status_cartao_microondas = False
+status_cartao_lavadora = False
+
 def read_status_cartoes():
     # lê os três cartões RFID; cada um possui uma leitura com um arduíno interno que comunica por 
     # um único pino com o Raspberry Pi, indicando que tem o cartão certo ou não.
@@ -225,11 +229,26 @@ def read_status_cartoes():
     GPIO.setup(gpio_etiquetaMicroondas, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
     mcp.setup(gp_etiquetaMaquina, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Etiqueta maquina
 
-    cartao_geladeira = GPIO.input(gpio_etiquetaGeladeira)
-    cartao_microondas = GPIO.input(gpio_etiquetaMicroondas)
-    cartao_lavadora = mcp.input(gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1)
+    # pega o status ATUAL (sinal 0 = cartão correto detectado)
+    cartao_geladeira = not(GPIO.input(gpio_etiquetaGeladeira))
+    cartao_microondas = not(GPIO.input(gpio_etiquetaMicroondas))
+    cartao_lavadora = not(mcp.input(gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1))
 
-    return cartao_geladeira, cartao_microondas, cartao_lavadora
+    # calcula o status, registrando um pulso de forma permanente
+    status_cartao_geladeira = status_cartao_geladeira | cartao_geladeira
+    status_cartao_microondas = status_cartao_microondas | cartao_lavadora
+    status_cartao_lavadora = status_cartao_lavadora | cartao_lavadora
+
+    return status_cartao_geladeira, status_cartao_microondas, status_cartao_lavadora
+
+def resetcartaogeladeira():
+    status_cartao_geladeira = False
+
+def resetcartaomicroondas():
+    status_cartao_microondas = False
+
+def resetcartaolavadora():
+    status_cartao_lavadora = False
 
 def ajaxdebugstatus(request):
     cartao_geladeira, cartao_microondas, cartao_lavadora = read_status_cartoes()
@@ -378,7 +397,7 @@ def setbateria(request):
 
     return JsonResponse(dicionario_json)
 
-def pulso_abrir_gaveta():
+def pulso_abrir_gaveta_cozinha():
 
     # trava da gaveta do armário é o sinal 4 da GPB (MCP23017)
     gp_travaGaveta = 4 #GPB4 (MCP23017)
@@ -391,3 +410,23 @@ def pulso_abrir_gaveta():
     mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
     time.sleep(1)
     mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+
+def pulso_abrir_banheiro():
+    #
+    pass
+
+def pulso_abrir_gaveta_banheiro():
+    #
+    pass
+
+def pulso_abrir_geladeira():
+    #
+    pass
+
+def pulso_abrir_armario_cozinha():
+    #
+    pass
+
+def pulso_abrir_bau():
+    #
+    pass
