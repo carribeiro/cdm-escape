@@ -13,7 +13,50 @@ de relés com chaves em paralelo para comando de cada luz. O Raspberry Pi se com
 meio de 4 bits apenas, para setar combinações de luzes para cada estágio do jogo. Isso foi 
 uma das pequenas surpresas do processo de "engenharia reversa" do jogo.
 
+## TABELA DE CONEXÕES
 
+| Porta            | Nº do Cabo conectado | Descrição                                                             |
+|------------------|----------------------|-----------------------------------------------------------------------|
+| PINO 7           | 2.1                  | LDR Registro Chuveiro                                                 |
+| PINO 11          | 1.1                  | Chave Verão/Inverno                                                   |
+| PINO 13          | 4.1                  | LDR Registro Torneira                                                 |
+| PINO 15          | 3.2                  | Gaveta Banheiro - LED Vermelho                                        |
+| PINO 19          | 3.1                  | Gaveta Banheiro - LED Verde                                           |
+| PINO 21          | 5.2                  | Gaveta Cozinha - LED Vermelho                                         |
+| PINO 23          | 5.1                  | Gaveta Cozinha - LED Verde                                            |
+| PINO 24          | 6.1                  | Armario Cozinha - LED Verde                                           |
+| PINO 29          | 6.2                  | Armario Cozinha - Led Vermelho                                        |
+| PINO 31          | 7.1                  | Tomadas do armario em serie                                           |
+| PINO 33          | 8.2                  | Modulo Etiqueta RFID Microondas (Apos divisor de tensão 3.3V Arduino) |
+| PINO 35          | 9.2                  | Divisoria - LED Verde                                                 |
+| PINO 37          | 9.1                  | Divisoria - LED Vermelho                                              |
+| PINO 40          | 10.2                 | Geladeira - LED Verde                                                 |
+| PINO 38          | 10.1                 | Geladeira - LED Vermelho                                              |
+| PINO 36          | 11.1                 | Modulo Etiqueta RFID Geladeira (Apos divisor de tensão 3.3V Arduino)  |
+| PINO 32          | 12.2                 |                                                                       |
+| PINO 26          | DESCONECTADO         | -                                                                     |
+| PINO 22          | DESCONECTADO         | -                                                                     |
+| PINO 18          | 13.1                 |                                                                       |
+| PINO 16          | 13.2                 |                                                                       |
+| PINO 12          | 14.1                 |                                                                       |
+| PINO 10          | 14.2                 |                                                                       |
+| PINO 8           | 15.2                 |                                                                       |
+| GPB 0 (MCP 0x22) | 16.1                 |                                                                       |
+| GPB 1 (MCP 0x22) | DESCONECTADO         | -                                                                     |
+| GPB 2 (MCP 0x22) | 19.2                 |                                                                       |
+| GPB 3 (MCP 0x22) | DESCONECTADO         |                                                                       |
+| GPB 4 (MCP 0x22) | 18.2                 |                                                                       |
+| GPB 5 (MCP 0x22) | CONECTADO (Nº?)      | Botão Reestabelecer Energia                                           |
+| GPB 6 (MCP 0x22) | DESCONECTADO         | -                                                                     |
+| GPB 7 (MCP 0x22) | DESCONECTADO         | -                                                                     |
+| GPA 0 (MCP 0x22) | DESCONECTADO         | -                                                                     |
+| GPA 1 (MCP 0x22) | DESCONECTADO         | -                                                                     |
+| GPA 2 (MCP 0x22) | DESCONECTADO         | -                                                                     |
+| GPA 3 (MCP 0x22) | DESCONECTADO         | -                                                                     |
+| GPA 4 (MCP 0x22) | Modulo Iluminação    | BIT 0 (Pino 2 Arduino)                                                |
+| GPA 5 (MCP 0x22) | Modulo Iluminação    | BIT 1 (Pino 3 Arduino)                                                |
+| GPA 6 (MCP 0x22) | Modulo Iluminação    | BIT 2 (Pino 4 Arduino)                                                |
+| GPA 7 (MCP 0x22) | Modulo Iluminação    | BIT 3 (Pino 5 Arduino)                                                |
 
 # Lógica 1
 
