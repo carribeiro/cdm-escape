@@ -439,23 +439,29 @@ def pulso_abrir_bau(request):
     pass
 
 def pulso_abrir_banheiro(request):
+
     # variáveis de IO
     gp_ledsJogoGeladeira = 7 #GPB7
     gp_travaPortaBanheiro = 3 # GPB3 (MCP23017)
 
     if request.method == 'GET':
         operacao = request.GET.get('operacao', None)
-    else:
-        return
+        dicionario_json = {
+            'retorno': 'Pulso abrir banheiro, OK!' + operacao,
+        }
 
-    # Loop pois a trava causa disturbio no sistema
-    for i in range(1):
-        # Garantir que o pino esta como OUTPUT
-        mcp.setup(gp_travaPortaBanheiro , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        
-        # Em nivel Baixo acionando o Rele
-        mcp.output(gp_travaPortaBanheiro, mcp.GPB, mcp.LOW if (operacao == 'ABRIR') else mcp.HIGH, mcp.ADDRESS2)
-        time.sleep(0.75)
+        # Loop pois a trava causa disturbio no sistema
+        for i in range(1):
+            # Garantir que o pino esta como OUTPUT
+            mcp.setup(gp_travaPortaBanheiro , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+    
+            opcode = mcp.LOW if (operacao == 'ABRIR') else mcp.HIGH
+            print('operacao='+operacao+' pulso='+str(i)+' opcode='+str(opcode))
+            # Em nivel Baixo acionando o Rele
+            mcp.output(gp_travaPortaBanheiro, mcp.GPB, opcode, mcp.ADDRESS2)
+            time.sleep(0.75)
+
+    return JsonResponse(dicionario_json)
 
 def pulso_fechar_banheiro(request):
     # variáveis de IO
