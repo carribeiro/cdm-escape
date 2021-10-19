@@ -521,7 +521,7 @@ def pulso_abrir_porta_armario(request):
         gp_travaArmario = 5 # GPB5 (MCP23017)
 
         # Garantir que o pino esta como OUTPUT
-        mcp.setup(gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.setup(gp_travaArmario , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
         
         # Pulsa nível LOW para abrir a gaveta, espera 1 segundo, retorna para nível HIGH
         # TODO: este tempo de 1s não é ideal de ocorrer no meio de um request HTTP, deveria ser movido para uma thread separada
