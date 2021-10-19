@@ -77,6 +77,9 @@ btn_led_38_lo.addEventListener('click', function(){ requestSetLedLo(38); });
 btn_led_40_hi.addEventListener('click', function(){ requestSetLedHi(40); }); 
 btn_led_40_lo.addEventListener('click', function(){ requestSetLedLo(40); });
 
+const btn_trava_banheiro = document.querySelector('#btn-trava-banheiro')
+btn_trava_banheiro.addEventListener('click', function(){ requestPulsoBanheiro('0b1000'); }); 
+
 const btn_spot_blackout = document.querySelector('#btn-spot-blackout')
 const btn_spot_bike = document.querySelector('#btn-spot-bike')
 const btn_spot_gaveta_cozinha = document.querySelector('#btn-spot-gaveta-cozinha')
@@ -285,6 +288,22 @@ function requestResetCartaoMicroondas() {
 function requestResetCartaoLavadora() {
     var xhttp = new XMLHttpRequest();
     var url = "resetcartaolavadora";
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+
+}
+
+function requestPulsoBanheiro() {
+    var xhttp = new XMLHttpRequest();
+    var url = "pulso_abrir_banheiro";
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
