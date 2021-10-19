@@ -441,3 +441,17 @@ def pulso_abrir_armario_cozinha():
 def pulso_abrir_bau():
     #
     pass
+
+def pulso_abrir_banheiro():
+    # variáveis de IO
+    gp_ledsJogoGeladeira = 7 #GPB7
+    gp_travaPortaBanheiro = 3 # GPB3 (MCP23017)
+
+    # Loop pois a trava causa disturbio no sistema
+    for i in range(1):
+        # Garantir que o pino esta como OUTPUT
+        mcp.setup(gp_travaPortaBanheiro , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        
+        # Em nivel Baixo acionando o Rele
+        mcp.output(gp_travaPortaBanheiro, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        time.sleep(0.75)
