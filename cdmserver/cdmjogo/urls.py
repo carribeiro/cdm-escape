@@ -23,5 +23,9 @@ urlpatterns = [
     path('setledlo', views.setledlo, name='setledlo'), 
     path('setspotcode', views.setspotcode, name='setspotcode'), 
     path('setbateria', views.setbateria, name='setbateria'), 
-    path('pulso_abrir_gaveta', views.pulso_abrir_gaveta, name='pulso_abrir_gaveta'), 
+    path('pulso_abrir_gaveta_cozinha', views.pulso_abrir_gaveta_cozinha, name='pulso_abrir_gaveta_cozinha'), 
+    path('pulso_abrir_gaveta_banheiro', views.pulso_abrir_gaveta_banheiro, name='pulso_abrir_gaveta_banheiro'), 
+    path('pulso_abrir_geladeira', views.pulso_abrir_geladeira, name='pulso_abrir_geladeira'), 
+    path('pulso_abrir_armario_cozinha', views.pulso_abrir_armario_cozinha, name='pulso_abrir_armario_cozinha'), 
+    path('pulso_abrir_bau', views.pulso_abrir_bau, name='pulso_abrir_bau'), 
 ]
