@@ -600,5 +600,7 @@ def read_sensores_banheiro():
     ldr_chuveiro = GPIO.input(gpio_registroChuveiro)
     seletor_verao = GPIO.input(gpio_veraoChuveiro) 
 
+    print("SENSORES BANHEIRO:", ldr_pia, ldr_chuveiro, seletor_verao)
+
     return ldr_pia, ldr_chuveiro, seletor_verao
 
