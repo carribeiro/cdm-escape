@@ -344,6 +344,10 @@ spot_codes = {
     '0b0100': 0b0100, # spot geladeira
     '0b0101': 0b0101, # spot banheiro
     '0b0110': 0b0110, # spot lavanderia + pia do banheiro
+    '0b0111': 0b0111, # spot das tomadas do armario
+    '0b1000': 0b1000, # spot do bau
+    '0b1001': 0b1001, # spot do aparador
+    '0b1100': 0b1100, # acendimento gradual
 }
 
 def setspotcode(request):

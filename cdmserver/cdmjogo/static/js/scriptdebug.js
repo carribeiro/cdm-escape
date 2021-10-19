@@ -83,6 +83,10 @@ const btn_spot_gaveta_cozinha = document.querySelector('#btn-spot-gaveta-cozinha
 const btn_spot_geladeira = document.querySelector('#btn-spot-geladeira')
 const btn_spot_banheiro = document.querySelector('#btn-spot-banheiro')
 const btn_spot_lavanderia = document.querySelector('#btn-spot-lavanderia')
+const btn_spot_armario = document.querySelector('#btn-spot-armario')
+const btn_spot_bau = document.querySelector('#btn-spot-bau')
+const btn_spot_aparador = document.querySelector('#btn-spot-aparador')
+const btn_spot_acendimento-gradual = document.querySelector('#btn-spot-acendimento-gradual')
 
 btn_spot_blackout.addEventListener('click', function(){ requestSetSpot('0b1101'); }); 
 btn_spot_bike.addEventListener('click', function(){ requestSetSpot('0b0010'); }); 
@@ -90,6 +94,10 @@ btn_spot_gaveta_cozinha.addEventListener('click', function(){ requestSetSpot('0b
 btn_spot_geladeira.addEventListener('click', function(){ requestSetSpot('0b0100'); }); 
 btn_spot_banheiro.addEventListener('click', function(){ requestSetSpot('0b0101'); }); 
 btn_spot_lavanderia.addEventListener('click', function(){ requestSetSpot('0b0110'); }); 
+btn_spot_armario.addEventListener('click', function(){ requestSetSpot('0b0111'); }); 
+btn_spot_bau.addEventListener('click', function(){ requestSetSpot('0b1000'); }); 
+btn_spot_aparador.addEventListener('click', function(){ requestSetSpot('0b1001'); }); 
+btn_spot_acendimento.addEventListener('click', function(){ requestSetSpot('0b1100'); }); 
 
 const btn_bateria_bike_0 = document.querySelector('#btn-bateria-bike-0')
 const btn_bateria_bike_1 = document.querySelector('#btn-bateria-bike-1')
