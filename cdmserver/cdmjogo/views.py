@@ -234,6 +234,10 @@ def read_status_cartoes():
     cartao_microondas = not(GPIO.input(gpio_etiquetaMicroondas))
     cartao_lavadora = not(mcp.input(gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1))
 
+    global status_cartao_geladeira
+    global status_cartao_microondas
+    global status_cartao_lavadora
+
     # calcula o status, registrando um pulso de forma permanente
     status_cartao_geladeira = status_cartao_geladeira | cartao_geladeira
     status_cartao_microondas = status_cartao_microondas | cartao_lavadora
