@@ -170,6 +170,9 @@ def ajaxstatus(request):
 
 # View para DEBUG do projeto
 def desenvolvimento(request):
+
+    mcp.confRegistradores()
+    mcp.confRegistradoresLuzes() # GPA como output
     return render(request, 'desenvolvimento/desenvolvimento.html', {})
 
 def ajaxdesenvolvimento(request):
@@ -362,13 +365,15 @@ def setbateria(request):
             mcp.setup(gp_barraLed[2], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
             mcp.setup(gp_barraLed[3], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
 
-            mcp.output(gp_barraLed[0], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
-            mcp.output(gp_barraLed[1], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
-            mcp.output(gp_barraLed[2], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
-            mcp.output(gp_barraLed[3], mcp.GPA, nivel_bateria[nivel], mcp.ADDRESS2)
+            mcp.output(gp_barraLed[0], mcp.GPA, nivel_bateria[nivel][0], mcp.ADDRESS2)
+            mcp.output(gp_barraLed[1], mcp.GPA, nivel_bateria[nivel][1], mcp.ADDRESS2)
+            mcp.output(gp_barraLed[2], mcp.GPA, nivel_bateria[nivel][2], mcp.ADDRESS2)
+            mcp.output(gp_barraLed[3], mcp.GPA, nivel_bateria[nivel][3], mcp.ADDRESS2)
 
             dicionario_json = {
-                'retorno': 'setbateria = PASSED!'
+                'retorno': 'setbateria = PASSED!',
+                'nivel': nivel,
+                'nivel_bateria': nivel_bateria[nivel],
             }
 
     return JsonResponse(dicionario_json)
