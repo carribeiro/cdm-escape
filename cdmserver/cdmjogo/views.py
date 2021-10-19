@@ -259,9 +259,13 @@ def resetcartaolavadora():
 
 def ajaxdebugstatus(request):
     cartao_geladeira, cartao_microondas, cartao_lavadora = read_status_cartoes()
+    ldr_pia, ldr_chuveiro, seletor_verao = read_sensores_banheiro()
     dicionario_json = { 
         'leds': status_leds, 
         'bicicleta': read_status_reed_bicicleta(), 
+        'ldr_pia': ldr_pia,
+        'ldr_chuveiro': ldr_chuveiro,
+        'seletor_verao': seletor_verao,
         'cartao_geladeira': cartao_geladeira,
         'cartao_microondas': cartao_microondas,
         'cartao_lavadora': cartao_lavadora,
@@ -574,4 +578,27 @@ def pulso_abrir_bau(request):
         mcp.output(gp_travaBau, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
     return JsonResponse(dicionario_json)
 
+
+def read_sensores_banheiro():
+    # GPIO's
+    gpio_registroTorneira = 13 # Pino para leitura do estado do registro (rasperry)
+    gpio_registroChuveiro = 7 # Pino do estado do registro chuveiro (rasperry)
+    gpio_veraoChuveiro = 11 # Pino para leitura do estado do verão do chuveiro (rasperry)
+
+    # Configurar os registradores
+    mcp.confRegistradoresBanheiroAberto()
+
+    # Configurado GPIO's do raspberry
+    GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
+    GPIO.setwarnings(False) # Desativa avisos
+
+    GPIO.setup(gpio_registroTorneira, GPIO.IN) # Pino como PULL-DOWN interno
+    GPIO.setup(gpio_registroChuveiro, GPIO.IN) # Pino como PULL-DOWN interno
+    GPIO.setup(gpio_veraoChuveiro, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+
+    ldr_pia = GPIO.input(gpio_registroTorneira)
+    ldr_chuveiro = GPIO.input(gpio_registroChuveiro)
+    seletor_verao = GPIO.input(gpio_veraoChuveiro) 
+
+    return ldr_pia, ldr_chuveiro, seletor_verao
 

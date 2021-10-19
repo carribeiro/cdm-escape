@@ -168,6 +168,11 @@ function updateStatus(resposta) {
     // reed bicicleta
     document.querySelector('#status-reed-bicicleta').className = (resposta.bicicleta ? "dot dotVerde" : "dot dotCinza");
 
+    // sensores do banheiro
+    document.querySelector('#status-ldr-pia').className = (resposta.ldr_pia ? "dot dotVerde" : "dot dotVermelho");
+    document.querySelector('#status-ldr-chuveiro').className = (resposta.ldr_chuveiro ? "dot dotVerde" : "dot dotVermelho");
+    document.querySelector('#status-seletor-verao').className = (resposta.seletor_verao ? "dot dotVerde" : "dot dotVermelho");
+
     // sensores de cartão geladeira, microondas e lavadora
     document.querySelector('#status-cartao-geladeira').className = (resposta.cartao_geladeira ? "dot dotVerde" : "dot dotCinza");
     document.querySelector('#status-cartao-microondas').className = (resposta.cartao_microondas ? "dot dotVerde" : "dot dotCinza");
