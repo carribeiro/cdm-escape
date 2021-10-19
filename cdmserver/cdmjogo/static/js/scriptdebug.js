@@ -77,10 +77,10 @@ btn_led_38_lo.addEventListener('click', function(){ requestSetLedLo(38); });
 btn_led_40_hi.addEventListener('click', function(){ requestSetLedHi(40); }); 
 btn_led_40_lo.addEventListener('click', function(){ requestSetLedLo(40); });
 
-const btn_abrir_banheiro = document.querySelector('#btn-trava-banheiro')
+const btn_abrir_banheiro = document.querySelector('#btn-abrir-banheiro')
 btn_abrir_banheiro.addEventListener('click', function(){ requestPulsoBanheiro('ABRIR'); }); 
 
-const btn_fechar_banheiro = document.querySelector('#btn-trava-banheiro')
+const btn_fechar_banheiro = document.querySelector('#btn-fechar-banheiro')
 btn_fechar_banheiro.addEventListener('click', function(){ requestPulsoBanheiro('FECHAR'); }); 
 
 const btn_spot_blackout = document.querySelector('#btn-spot-blackout')
