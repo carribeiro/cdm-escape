@@ -306,7 +306,7 @@ function requestResetCartaoLavadora() {
 
 function requestPulsoBanheiro(operacao) {
     var xhttp = new XMLHttpRequest();
-    var url = "pulso_abrir_banheiro?" + operacao;
+    var url = "pulso_abrir_banheiro?operacao=" + operacao;
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
