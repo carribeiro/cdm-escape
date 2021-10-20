@@ -307,7 +307,7 @@ def read_status_caminho_energia():
 
 count_cartao_geladeira = 0
 count_cartao_microondas = 0
-count_cartao_lavadora = Fa0lse
+count_cartao_lavadora = 0
 
 def read_status_cartoes():
     # lê os três cartões RFID; cada um possui uma leitura com um arduíno interno que comunica por 
