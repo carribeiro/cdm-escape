@@ -87,9 +87,9 @@
           }, 2000);
         }
 
-        function GetStatus() {
+        function getStatus() {
             jQuery.ajax({
-                url: "ajaxdebugstatus",
+                url: "ajaxdebugstatus?efeitos_banheiro=1",
                 type: "GET",
                 contentType: 'application/json; charset=utf-8',
                 success: function(resultData) {

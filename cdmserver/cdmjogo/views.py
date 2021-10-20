@@ -278,8 +278,13 @@ def resetcartaolavadora(request):
     status_cartao_lavadora = False
 
 def ajaxdebugstatus(request):
+    if request.method == 'GET':
+        efeitos_banheiro = request.GET.get('efeitos_banheiro', None)
+    else:
+        efeitos_banheiro = false
+
     cartao_geladeira, cartao_microondas, cartao_lavadora = read_status_cartoes()
-    ldr_pia, ldr_chuveiro, seletor_verao = read_sensores_banheiro()
+    ldr_pia, ldr_chuveiro, seletor_verao = read_sensores_banheiro(efeitos_banheiro)
     dicionario_json = { 
         'leds': status_leds, 
         'bicicleta': read_status_reed_bicicleta(), 
@@ -599,7 +604,7 @@ def pulso_abrir_bau(request):
     return JsonResponse(dicionario_json)
 
 
-def read_sensores_banheiro():
+def read_sensores_banheiro(efeitos=False):
     # GPIO's
     gpio_registroTorneira = 13 # Pino para leitura do estado do registro (rasperry)
     gpio_registroChuveiro = 7 # Pino do estado do registro chuveiro (rasperry)
@@ -626,26 +631,27 @@ def read_sensores_banheiro():
 
     print("SENSORES BANHEIRO:", ldr_pia, ldr_chuveiro, seletor_verao)
 
-    if (ldr_pia):
-        mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedPia, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
-    else:
-        mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedPia, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+    if (efeitos):
+        if (ldr_pia):
+            mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedPia, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        else:
+            mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedPia, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
 
-    if (ldr_chuveiro):
-        mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
-    else:
-        mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
+        if (ldr_chuveiro):
+            mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
+        else:
+            mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
 
-    if (seletor_verao):
-        mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
-    else:
-        mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+        if (seletor_verao):
+            mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        else:
+            mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
 
     return ldr_pia, ldr_chuveiro, seletor_verao
 
