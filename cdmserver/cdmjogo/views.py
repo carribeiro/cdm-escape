@@ -270,7 +270,7 @@ def read_status_mesa_passar():
     return mcp.input(gp_mesa_passar, mcp.GPB, mcp.ADDRESS1) == 0
 
 def read_status_botao_geladeira():
-    gp_botao_geladeira = 32 # GPIO 32 (Raspberry Pi)
+    gpio_botao_geladeira = 32 # GPIO 32 (Raspberry Pi)
     GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
     GPIO.setwarnings(False) # Desativa avisos
     GPIO.setup(gpio_botao_geladeira, GPIO.IN) # Pino como PULL-DOWN interno
