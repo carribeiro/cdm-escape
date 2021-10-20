@@ -36,7 +36,7 @@ class Logica_9(Logica_geral):
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        mcp.setup(cls.gp_pinoSinalMesaPassar, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
+        mcp.setup(cls.gp_pinoSinalMesaPassar, mcp.GPB, mcp.IN, mcp.ADDRESS1)
 
         GPIO.setup(cls.ledAcimaMicroondasVermelho, GPIO.OUT)
         GPIO.setup(cls.ledAcimaMicroondasVerde, GPIO.OUT)
