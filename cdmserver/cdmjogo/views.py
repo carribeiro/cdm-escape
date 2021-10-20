@@ -216,7 +216,6 @@ status_leds = {
     '29': False, # Acima Microondas Vermelho (29)
     '24': False, # Acima Microondas Verde (24)
     '15': False, # Pia Vermelho (15)
-    '19': False, # Pia Verde = (19)
     '12': False, # Aparador Vermelho (12)
     '10': False, # Aparador Verde (10)
     '18': False, # Baú Vermelho (18)
@@ -225,10 +224,62 @@ status_leds = {
     '40': False, # Geladeira Verde (40)
 }
 
+import time
+pulso_reed_count = 0
+#pulso_reed_last = time.time_ns()
+
 def read_status_reed_bicicleta():
-    gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017)
-    mcp.setup(gp_reedSwitchBicicleta, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
-    return mcp.input(gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)    
+    global pulso_reed_count
+    gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017 0x22)
+    mcp.setup(gp_reedSwitchBicicleta, mcp.GPB, mcp.IN, mcp.ADDRESS1)
+    sensor = mcp.input(gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)
+    if (sensor):
+        pulso_reed_count = pulso_reed_count + 1
+    return pulso_reed_count
+
+pulso_tomadas_last_status = 0
+pulso_tomadas_last_time = 0
+
+def read_status_tomadas_armario():
+    #global pulso_tomadas_last_status
+    #global pulso_tomadas_last_time
+    #pulso_tomadas_now = time.time_ns()
+    #elapsed_time = pulso_tomadas_now - pulso_tomadas_last_time
+
+    gpio_tomadas_armario = 31 # GPIO 31 (Raspberry Pi)
+    GPIO.setwarnings(False) # Desativa avisos
+    GPIO.setup(gpio_tomadas_armario, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    pulso = (GPIO.input(gpio_tomadas_armario) == 0)
+    return pulso
+    """
+    # lógica de filtro está confusa preciso testar pra ver se é necessário
+    if (pulso):
+        if (pulso_tomadas_last_status):
+            # estava ativo, continua ativo
+            pulso_tomadas_last_time = pulso_tomadas_now
+            return True
+        else:
+            # acabou de ativar, só retorna verdadeiro se já estiver ativo há mais de 500.000.000 ns (0.5s)
+            pulso_tomadas_last_time = pulso_tomadas_now
+            return True
+    """
+
+def read_status_mesa_passar():
+    gp_mesa_passar = 2 # GPB2 (MCP23017 0x22)
+    mcp.setup(gp_mesa_passar, mcp.GPB, mcp.IN, mcp.ADDRESS1)
+    return mcp.input(gp_mesa_passar, mcp.GPB, mcp.ADDRESS1) == 0
+
+def readio_status_botao_geladeira():
+    gp_botao_geladeira = 32 # GPIO 32 (Raspberry Pi)
+    GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
+    GPIO.setwarnings(False) # Desativa avisos
+    GPIO.setup(gpio_botao_geladeira, GPIO.IN) # Pino como PULL-DOWN interno
+    return (GPIO.input(gpio_botao_geladeira) == 0):
+
+def read_status_botao_aparador():
+    gp_botao_aparador = 5 # GPB5 (MCP23017 0x22)
+    mcp.setup(gp_botao_aparador, mcp.GPB, mcp.IN, mcp.ADDRESS1)
+    return (mcp.input(gp_botao_aparador, mcp.GPB, mcp.ADDRESS1) == 1)
 
 status_cartao_geladeira = False
 status_cartao_microondas = False
@@ -287,7 +338,11 @@ def ajaxdebugstatus(request):
     ldr_pia, ldr_chuveiro, seletor_verao = read_sensores_banheiro(efeitos_banheiro)
     dicionario_json = { 
         'leds': status_leds, 
-        'bicicleta': read_status_reed_bicicleta(), 
+        'bicicleta': read_status_reed_bicicleta(),
+        'tomadas_armario': read_status_tomadas_armario(),
+        'mesa_passar': read_status_mesa_passar(),
+        'geladeira': read_status_botao_geladeira(),
+        'aparador': read_status_botao_aparador(),
         'ldr_pia': ldr_pia,
         'ldr_chuveiro': ldr_chuveiro,
         'seletor_verao': seletor_verao,
