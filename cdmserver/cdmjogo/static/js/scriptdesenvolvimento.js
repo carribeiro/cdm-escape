@@ -137,14 +137,6 @@ btn_bateria_bike_2.addEventListener('click', function(){ requestSetBateria(2); }
 btn_bateria_bike_3.addEventListener('click', function(){ requestSetBateria(3); }); 
 btn_bateria_bike_4.addEventListener('click', function(){ requestSetBateria(4); }); 
 
-const btn_reset_cartao_geladeira = document.querySelector('#btn-reset-cartao-geladeira')
-const btn_reset_cartao_microondas = document.querySelector('#btn-reset-cartao-microondas')
-const btn_reset_cartao_lavadora = document.querySelector('#btn-reset-cartao-lavadora')
-
-btn_reset_cartao_geladeira.addEventListener('click', function(){ requestResetCartaoGeladeira(); }); 
-btn_reset_cartao_microondas.addEventListener('click', function(){ requestResetCartaoMicroondas(); }); 
-btn_reset_cartao_lavadora.addEventListener('click', function(){ requestResetCartaoLavadora(); }); 
-
 // Chamada Ajax para atualizar status dos LEDs
 
 function updateStatus(resposta) {
