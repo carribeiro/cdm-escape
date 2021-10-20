@@ -269,7 +269,7 @@ def read_status_mesa_passar():
     mcp.setup(gp_mesa_passar, mcp.GPB, mcp.IN, mcp.ADDRESS1)
     return mcp.input(gp_mesa_passar, mcp.GPB, mcp.ADDRESS1) == 0
 
-def readio_status_botao_geladeira():
+def radio_status_botao_geladeira():
     gp_botao_geladeira = 32 # GPIO 32 (Raspberry Pi)
     GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
     GPIO.setwarnings(False) # Desativa avisos
