@@ -14,7 +14,7 @@ function updateStatus(resposta) {
     document.querySelector('#status-cartao-microondas').className = ((resposta.cartao_microondas > 0) ? "dot dotVerde" : "dot dotCinza");
     document.querySelector('#status-cartao-lavadora').className = ((resposta.cartao_lavadora > 0) ? "dot dotVerde" : "dot dotCinza");
 
-    document.querySelector('#count-cartao-geladeira').className = (resposta.cartao_geladeira ? "dot dotVerde" : "dot dotCinza");
-    document.querySelector('#count-cartao-microondas').className = (resposta.cartao_microondas ? "dot dotVerde" : "dot dotCinza");
-    document.querySelector('#count-cartao-lavadora').className = (resposta.cartao_lavadora ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#count-cartao-geladeira').innerHTML = resposta.cartao_geladeira;
+    document.querySelector('#count-cartao-microondas').innerHTML = resposta.cartao_microondas;
+    document.querySelector('#count-cartao-lavadora').innerHTML = resposta.cartao_lavadora;
 }
