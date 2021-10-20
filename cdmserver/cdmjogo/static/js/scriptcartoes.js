@@ -10,7 +10,11 @@ btn_reset_cartao_lavadora.addEventListener('click', function(){ requestResetCart
 
 function updateStatus(resposta) {
     // sensores de cartão geladeira, microondas e lavadora
-    document.querySelector('#status-cartao-geladeira').className = (resposta.cartao_geladeira ? "dot dotVerde" : "dot dotCinza");
-    document.querySelector('#status-cartao-microondas').className = (resposta.cartao_microondas ? "dot dotVerde" : "dot dotCinza");
-    document.querySelector('#status-cartao-lavadora').className = (resposta.cartao_lavadora ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-cartao-geladeira').className = ((resposta.cartao_geladeira > 0) ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-cartao-microondas').className = ((resposta.cartao_microondas > 0) ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-cartao-lavadora').className = ((resposta.cartao_lavadora > 0) ? "dot dotVerde" : "dot dotCinza");
+
+    document.querySelector('#count-cartao-geladeira').className = (resposta.cartao_geladeira ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#count-cartao-microondas').className = (resposta.cartao_microondas ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#count-cartao-lavadora').className = (resposta.cartao_lavadora ? "dot dotVerde" : "dot dotCinza");
 }

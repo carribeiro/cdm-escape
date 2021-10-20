@@ -305,9 +305,9 @@ def read_status_caminho_energia():
         pulso_caminho_energia += 1
     return pulso_caminho_energia
 
-status_cartao_geladeira = False
-status_cartao_microondas = False
-status_cartao_lavadora = False
+count_cartao_geladeira = 0
+count_cartao_microondas = 0
+count_cartao_lavadora = Fa0lse
 
 def read_status_cartoes():
     # lê os três cartões RFID; cada um possui uma leitura com um arduíno interno que comunica por 
@@ -329,28 +329,28 @@ def read_status_cartoes():
     cartao_lavadora = not(mcp.input(gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1))
 
     print("Cartões (G/M/L):", cartao_geladeira, cartao_microondas, cartao_lavadora)
-    global status_cartao_geladeira
-    global status_cartao_microondas
-    global status_cartao_lavadora
+    global count_cartao_geladeira
+    global count_cartao_microondas
+    global count_cartao_lavadora
 
     # calcula o status, registrando um pulso de forma permanente
-    status_cartao_geladeira = status_cartao_geladeira | cartao_geladeira
-    status_cartao_microondas = status_cartao_microondas | cartao_lavadora
-    status_cartao_lavadora = status_cartao_lavadora | cartao_lavadora
+    count_cartao_geladeira = count_cartao_geladeira + 1 if cartao_geladeira else 0
+    count_cartao_microondas = count_cartao_microondas + 1 if cartao_lavadora else 0
+    count_cartao_lavadora = count_cartao_lavadora + 1 if cartao_lavadora else 0
 
-    return status_cartao_geladeira, status_cartao_microondas, status_cartao_lavadora
+    return count_cartao_geladeira, count_cartao_microondas, count_cartao_lavadora
 
 def resetcartaogeladeira(request):
-    global status_cartao_geladeira
-    status_cartao_geladeira = False
+    global count_cartao_geladeira
+    count_cartao_geladeira = 0
 
 def resetcartaomicroondas(request):
-    global status_cartao_microondas
-    status_cartao_microondas = False
+    global count_cartao_microondas
+    count_cartao_microondas = 0
 
 def resetcartaolavadora(request):
     global status_cartao_lavadora
-    status_cartao_lavadora = False
+    count_cartao_lavadora = 0
 
 def ajaxdebugstatus(request):
     if request.method == 'GET':

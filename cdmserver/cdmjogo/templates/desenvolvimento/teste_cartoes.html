@@ -33,21 +33,24 @@
         <tr>
             <th scope="row">Cartão geladeira</th>
             <td>
-                <span id="status-cartao-geladeira" class="dot dotCinza"></span>
+                <span id="status-cartao-geladeira" class="dot dotCinza"></span>&nbsp
+                <span id="count-cartao-geladeira"></span>&nbsp;pulsos&nbsp;
                 <button id="btn-reset-cartao-geladeira" type="button" class="btn btn-info">RESET CARTÃO GELADEIRA</button>
             </td>
         </tr>
         <tr>
             <th scope="row">Cartão microondas</th>
             <td>
-                <span id="status-cartao-microondas" class="dot dotCinza"></span>
+                <span id="status-cartao-microondas" class="dot dotCinza"></span>&nbsp
+                <span id="count-cartao-microondas"></span>&nbsp;pulsos&nbsp;
                 <button id="btn-reset-cartao-microondas" type="button" class="btn btn-info">RESET CARTÃO MICROONDAS</button>
             </td>
         </tr>
         <tr>
             <th scope="row">Cartão lavadora</th>
             <td>
-                <span id="status-cartao-lavadora" class="dot dotCinza"></span>
+                <span id="status-cartao-lavadora" class="dot dotCinza"></span>&nbsp
+                <span id="count-cartao-lavadora"></span>&nbsp;pulsos&nbsp;
                 <button id="btn-reset-cartao-lavadora" type="button" class="btn btn-info">RESET CARTÃO LAVADORA</button>
             </td>
         </tr>
@@ -67,7 +70,7 @@
         function poll_status() {
           setTimeout(function () {
              getStatus();
-          }, 2000);
+          }, 100);
         }
 
         function GetStatus() {
