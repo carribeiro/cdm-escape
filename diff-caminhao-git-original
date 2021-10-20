@@ -1,0 +1,318 @@
+diff --git a/cdmserver/cdmjogo/classes/logica_1.py b/cdmserver/cdmjogo/classes/logica_1.py
+index 688437d..97fb7b5 100644
+--- a/cdmserver/cdmjogo/classes/logica_1.py
++++ b/cdmserver/cdmjogo/classes/logica_1.py
+@@ -71,6 +71,7 @@ class Logica_1(Logica_geral):
+     @classmethod
+     def luzBaixaSala(cls):
+         # Codigo binario para manter apenas a luz da sala Acessa
++        cls.log('Logica 1 - executa ação de luz baixa')
+         mcp.escreverBinarioLuzes(0b0001)
+         cls._concluida = True
+ 
+@@ -78,15 +79,18 @@ class Logica_1(Logica_geral):
+     # Sobreescrevendo metodo threadLogica() da classe pai
+     @classmethod
+     def threadLogica(cls):
++        cls.log('Logica 1 - INICIANDO')
+         while cls.isConcluida() == False:
+-            #print('1ª Logica Rodando')
++            #cls.log('Logica 1 - RODANDO')
+             time.sleep(0.15)
+             pass
+             
+         else:
+             # Ao finalizar o loop, ou seja, concluir a logica, Imprime uma mensagem
+-            print('1ª Logica - Finalizada')
++            cls.log('Logica 1 - FINALIZANDO (5s de delay))')
+             time.sleep(5)
++            cls.log('Logica 1 - Dispara Logica 2+3')
+             Logica_23.iniciarThread()
++            cls.log('Logica 1 - Logica 2+3 iniciada')
+ 
+-# ------ FIM DA LOGICA 1 ---------
+\ No newline at end of file
++# ------ FIM DA LOGICA 1 ---------
+diff --git a/cdmserver/cdmjogo/classes/logica_1011.py b/cdmserver/cdmjogo/classes/logica_1011.py
+index 30b68e9..e53b8c8 100644
+--- a/cdmserver/cdmjogo/classes/logica_1011.py
++++ b/cdmserver/cdmjogo/classes/logica_1011.py
+@@ -81,13 +81,13 @@ class Logica_1011(Logica_geral):
+         # Acender Spot Bau
+         #cls.acenderSpotBau()
+ 
+-        for i in range(6):    
++        for i in range(3):    
+             # Em nivel Baixo acionando o Rele
+             mcp.output(cls.gp_travaBau, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
+-            time.sleep(1)
++            time.sleep(0.05)
+             # Em nivel Alto desacionando o Rele
+             mcp.output(cls.gp_travaBau, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
+-            time.sleep(2)
++            time.sleep(3)
+ 
+ 
+     # Metodo para acender o spot do bau
+diff --git a/cdmserver/cdmjogo/classes/logica_1213.py b/cdmserver/cdmjogo/classes/logica_1213.py
+index 52c8f9b..c71c802 100644
+--- a/cdmserver/cdmjogo/classes/logica_1213.py
++++ b/cdmserver/cdmjogo/classes/logica_1213.py
+@@ -100,7 +100,7 @@ class Logica_1213(Logica_geral):
+     def abrirGavetaAparador(cls):
+         mcp.setup(cls.gp_travaAparador, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+         mcp.output(cls.gp_travaAparador, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
+-        time.sleep(1)
++        time.sleep(0.05)
+         mcp.output(cls.gp_travaAparador, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
+ 
+         # Configurado GPIO's do raspberry
+diff --git a/cdmserver/cdmjogo/classes/logica_23.py b/cdmserver/cdmjogo/classes/logica_23.py
+index 65981ab..8b10986 100644
+--- a/cdmserver/cdmjogo/classes/logica_23.py
++++ b/cdmserver/cdmjogo/classes/logica_23.py
+@@ -39,14 +39,17 @@ class Logica_23(Logica_geral):
+     # Sobreescrevendo metodo threadLogica() da classe pai
+     @classmethod
+     def threadLogica(cls):
+-        
++
++        cls.log('Logica 2+3 - INICIANDO')
+         while cls.isConcluida() == False:
+-            #print('2ª Logica Rodando')
++            #cls.log('Logica 2+3 - Rodando')
+             time.sleep(0.15)
+             pass
+         else:
+-            print('2ª Logica - Finalizada')
++            cls.log('Logica 2+3 - FINALIZANDO (delay de 5 segundos)')
+             time.sleep(5)
++            cls.log('Logica 2+3 - Disparando Logica 4+5')
+             Logica_45.iniciarThread()
++            cls.log('Logica 2+3 - Logica 4+5 iniciada')
+ 
+-# ------ FIM DA LOGICA 2 e 3 ---------
+\ No newline at end of file
++# ------ FIM DA LOGICA 2 e 3 ---------
+diff --git a/cdmserver/cdmjogo/classes/logica_45.py b/cdmserver/cdmjogo/classes/logica_45.py
+index c13adaa..af1d812 100644
+--- a/cdmserver/cdmjogo/classes/logica_45.py
++++ b/cdmserver/cdmjogo/classes/logica_45.py
+@@ -185,7 +185,7 @@ class Logica_45(Logica_geral):
+         
+         # Em nivel Baixo acionando o Rele
+         mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+-        time.sleep(1)
++        time.sleep(0.05)
+         # Em nivel Alto desacionando o Rele
+         mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+ 
+@@ -210,6 +210,8 @@ class Logica_45(Logica_geral):
+     # Sobreescrevendo metodo threadLogica() da classe pai
+     @classmethod
+     def threadLogica(cls):
++
++        cls.log('Logica 4+5 - INICIANDO (sem delay)')
+         # Repete enquanto esta logica não for concluida
+         contadorPulso = 0 # Conta quantos pulsos a raspberry recebeu
+         leituraAnterior = 1 # Inicialmente leitura e nivel Alto
+@@ -219,36 +221,45 @@ class Logica_45(Logica_geral):
+             leitura = mcp.input(cls.gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)
+ 
+             if leitura == 1 and leituraAnterior == 0:
++                cls.log('Logica 4+5 - PULSO REGISTRADO')
+                 contadorPulso += 1
+                 leituraAnterior = 1
+ 
+                 if contadorPulso == 1:
++                    cls.log('Logica 4+5 - NIVEL 1')
+                     cls.acenderBarraLedNivel(0)
+ 
+                 elif contadorPulso == 5:
++                    cls.log('Logica 4+5 - NIVEL 2')
+                     cls.acenderBarraLedNivel(1)
+ 
+                 elif contadorPulso == 10:
++                    cls.log('Logica 4+5 - NIVEL 3')
+                     cls.acenderBarraLedNivel(2)
+                     
+                 elif contadorPulso == 15:
++                    cls.log('Logica 4+5 - NIVEL 4')
+                     cls.acenderBarraLedNivel(3)
+                     time.sleep(0.25)
++                    cls.log('Logica 4+5 - Efeito de carregamento')
+                     cls.efeitoCarregandoFinal()
+                     
+                     # Marca a logica como concluida para tocar o som
++                    cls.log('Logica 4+5 - Marca como concluida (3s de delay)')
+                     cls._concluida = True
+                     time.sleep(3)
+                     # Altera a luz
++                    cls.log('Logica 4+5 - ACENDE SPOT GAVETA COZINHA + 3s de DELAY')
+                     cls.acenderSpotGavetaCozinha()
+                     time.sleep(3)
+                     # Em seguida abre a gaveta
++                    cls.log('Logica 4+5 - ABRE GAVETA DA COZINHA')
+                     cls.abrirGaveta()
++                    cls.log('Logica 4+5 - ABRIU A GAVETA')
+ 
+             elif leitura == 0 and leituraAnterior == 1:
+                 # leitura difente
+                 leituraAnterior = 0
+-                    
+ 
+                 # Pausa de 250ms no loop
+                 #time.sleep(0.25)
+@@ -256,9 +267,11 @@ class Logica_45(Logica_geral):
+         
+         else:
+             # Ao finalizar o loop, ou seja, concluir a logica, Imprime uma mensagem
+-            print('4ª e 5ª Logica - Finalizada')
++            cls.log('Logica 4+5 - FINALIZADA (5s de delay)')
+             #cls.acenderSpotGavetaCozinha()
+             time.sleep(5)
++            cls.log('Logica 4+5 - DISPARA Logica 6')
+             Logica_6.iniciarThread()
++            cls.log('Logica 4+5 - Logica 6 disparada')
+ 
+ # ------ FIM DA LOGICA 4 e 5 ---------
+diff --git a/cdmserver/cdmjogo/classes/logica_8.py b/cdmserver/cdmjogo/classes/logica_8.py
+index 70c131e..5c5cf6e 100644
+--- a/cdmserver/cdmjogo/classes/logica_8.py
++++ b/cdmserver/cdmjogo/classes/logica_8.py
+@@ -94,7 +94,7 @@ class Logica_8(Logica_geral):
+         mcp.setup(cls.gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+         # Em nivel Baixo acionando o Rele
+         mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+-        time.sleep(1)
++        time.sleep(0.05)
+         # Em nivel Alto desacionando o Rele
+         mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+         
+diff --git a/cdmserver/cdmjogo/classes/logica_9.py b/cdmserver/cdmjogo/classes/logica_9.py
+index 07e7fb2..e26966f 100644
+--- a/cdmserver/cdmjogo/classes/logica_9.py
++++ b/cdmserver/cdmjogo/classes/logica_9.py
+@@ -67,7 +67,7 @@ class Logica_9(Logica_geral):
+         
+         # Em nivel Baixo acionando o Rele
+         mcp.output(cls.gp_travaArmario, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+-        time.sleep(1)
++        time.sleep(0.05)
+         # Em nivel Alto desacionando o Rele
+         mcp.output(cls.gp_travaArmario, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+ 
+diff --git a/cdmserver/cdmjogo/classes/logica_geral.py b/cdmserver/cdmjogo/classes/logica_geral.py
+index 1c88abc..710f0cd 100644
+--- a/cdmserver/cdmjogo/classes/logica_geral.py
++++ b/cdmserver/cdmjogo/classes/logica_geral.py
+@@ -3,6 +3,7 @@
+ 
+ import time # Modulo para delays e contagem de tempo
+ import threading # Modulo para trabalhar com treads
++import sys
+ 
+ class Logica_geral(object):
+     """Classe Logica_geral, usada como classe Pai para herancas nas classes Logica_n do jogo.
+@@ -18,6 +19,9 @@ class Logica_geral(object):
+     _thread = None
+ 
+     # METODOS DA CLASSE
++    @classmethod
++    def log(cls, *args):
++        print(*args, file=sys.stderr)
+ 
+     @classmethod
+     def setup(cls):
+@@ -47,10 +51,10 @@ class Logica_geral(object):
+             cls._thread.start() # Inicia a thread
+ 
+         elif (cls._thread.isAlive() == True):
+-            print('Thread da ' + str(cls.__name__) + ' em execução, é necessario reinicia-la para executar do inicio.')
++            cls.log('Thread da ' + str(cls.__name__) + ' em execução, é necessario reinicia-la para executar do inicio.')
+         
+         else:
+-            print('Thread da ' + str(cls.__name__) + ' já concluida, é necessario reinicia-la para executar novamente.')
++            cls.log('Thread da ' + str(cls.__name__) + ' já concluida, é necessario reinicia-la para executar novamente.')
+ 
+     @classmethod
+     def threadLogica(cls):
+@@ -60,4 +64,4 @@ class Logica_geral(object):
+         """
+         raise NotImplementedError('É necessário implementar o metodo threadLogica() na classe filha! ')
+ 
+-# ------ FIM CLASSE Logica_geral ------
+\ No newline at end of file
++# ------ FIM CLASSE Logica_geral ------
+diff --git a/cdmserver/cdmjogo/static/js/scripthistoria1.js b/cdmserver/cdmjogo/static/js/scripthistoria1.js
+index 00abb57..4cf0208 100644
+--- a/cdmserver/cdmjogo/static/js/scripthistoria1.js
++++ b/cdmserver/cdmjogo/static/js/scripthistoria1.js
+@@ -128,6 +128,7 @@ function requestStatusLogicas() {
+             if (resposta.logica1213_status == true){
+                 var dotlogica1213 = document.querySelector('#status-logica1213');
+                 dotlogica1213.className = "dot dotVerde";
++                reproduzirAcertoLogica(1213);
+             }
+ 
+             //console.log([resposta.logica8_registrosFechados,resposta.logica7_status,resposta.logica8_status])
+@@ -342,6 +343,19 @@ function reproduzirAcertoLogica(nLogica){
+         audioBanheiro.pause();
+         audioAcerto.play();
+     }
++    else if (nLogica == 1213 && acertosReproduzidos.l1213 == false) {
++        // Se esta logica foi concluida, obrigatoriamente as anteriores tambem foram
++        acertosReproduzidos.l45 = true;
++        acertosReproduzidos.l6 = true;
++        acertosReproduzidos.l7 = true;
++        acertosReproduzidos.l8 = true;
++        acertosReproduzidos.l9 = true;
++        acertosReproduzidos.l1011 = true;
++        acertosReproduzidos.l1213 = true;
++        audioBanheiro.pause();
++        audioAcerto.play();
++        audioAcerto.play();
++    }
+ }
+ 
+ // Esta função reproduz ou pausa o som de registro aberto(Agua caindo)
+diff --git a/cdmserver/cdmjogo/views.py b/cdmserver/cdmjogo/views.py
+index e7eb3a2..fb03413 100644
+--- a/cdmserver/cdmjogo/views.py
++++ b/cdmserver/cdmjogo/views.py
+@@ -13,7 +13,8 @@ from cdmjogo.classes.logica_1213 import Logica_1213
+ import os # Modulo para comandos shell linux
+ from cdmjogo.classes.mcp23017 import MCP23017 as mcp
+ import time
+-
++import sys # usamos sys.stderr para logar mensagens de erro & prints de debug
++ 
+ # View para retornar a pagina index.html para o cliente
+ def index(request):
+     return render(request, 'index/index.html', {})
+@@ -128,17 +129,24 @@ def ajaxhistoria2(request):
+ 
+     return JsonResponse(dicionario_json)
+ 
++def log(*args):
++    print(*args, file=sys.stderr)
++
+ def ajaxiniciarjogo(request):
+     print('Iniciando Jogo...')
+ 
++    log('Iniciando registradores...')
+     mcp.confRegistradores()
++    log('Iniciando registradores das luzes...')
+     mcp.confRegistradoresLuzes() # GPA como output
++    log('Iniciando o status das luzes...')
+     mcp.escreverBinarioLuzes(0b1110) # Codigo de reles desativados
++    log('Delay de 500 ms...')
+     time.sleep(0.5)
+ 
++    log('Inicia thread da Lógica_1...')
+     Logica_1.iniciarThread()
+ 
+-
+     msgRetorno = 'rodando'
+     dicionario_json = {
+         'retorno': msgRetorno,
