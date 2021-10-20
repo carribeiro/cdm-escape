@@ -298,7 +298,7 @@
     </table>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{% static 'jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'popper.min.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.min.js' %}"></script>
 
@@ -313,7 +313,7 @@
           }, 2000);
         }
 
-        function GetStatus() {
+        function getStatus() {
             jQuery.ajax({
                 url: "ajaxdebugstatus",
                 type: "GET",
