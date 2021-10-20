@@ -281,6 +281,7 @@ class MCP23017(object):
     @classmethod
     def confRegistradoresBanheiroAberto(cls):
         print('Escrevendo 0xB7 em todos os registradores...')
+        # 0xB7 = 0b10110111 -> desliga os bits GPB6 e GPB3
         cls.instanciarBarramento()
         # Extensor 0x22
         cls.barramento.write_byte_data(cls.ADDRESS1, cls.IODIRA, 0xF)
@@ -325,6 +326,7 @@ class MCP23017(object):
         # pinos de comunicação com o Arduíno do painel de iluminação.
 
         # Desloca o codigoBin em 4 bits para a direita e escreve no registrador
+        # Código é enviado para o Arduíno do painel de iluminação
         cls.barramento.write_byte_data(cls.ADDRESS1, cls.OLATA, (codigoBin << 4))
 
 

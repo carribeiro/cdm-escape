@@ -16,14 +16,15 @@ cozinha abrirá, fazendo barulho e ascendendo o LED indicando a gaveta liberada.
 
 class Logica_45(Logica_geral):
 
-    # GPIO's 
-    gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017)
+    # Portas nativas
     gpio_ledGavetaVermelho = 21 # Led indicador de gaveta fechada (raspberry)
     gpio_ledGavetaVerde = 23 # Led indicador de gaveta aberta (raspberry)
-    # Relés
-    gp_barraLed = [2,3,4,5] # GPA5, GPA4, GPA3, GPA2 (MCP23017)
-    #gp_luzCasa = 0 # GPA0 (MCP23017)
-    gp_travaGaveta = 4 #GPB4 (MCP23017)
+
+    # Portas extendidas MCP23017 0x24
+    gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017 0x22)
+    gp_barraLed = [2,3,4,5] # GPA5, GPA4, GPA3, GPA2 (MCP23017 0x24)
+    gp_travaGaveta = 4 #GPB4 (MCP23017 0x24)
+    #gp_luzCasa = 0 # GPA0 (MCP23017 0x24)
 
     # Sobreescrevendo metodo setup() da classe pai
     @classmethod

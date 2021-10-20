@@ -30,16 +30,16 @@ class Logica_8(Logica_geral):
     gpio_registroTorneira = 13 # Pino para leitura do estado do registro (rasperry)
     gpio_registroChuveiro = 7 # Pino do estado do registro chuveiro (rasperry)
     gpio_veraoChuveiro = 11 # Pino para leitura do estado do verão do chuveiro (rasperry)
-    gpio_ledVermelho = 15
-    gpio_ledVerde = 19
+    ledPiaVermelho = 15
+    ledPiaVerde = 19
 
     # Relés
-    gp_travaGaveta = 2 # GPB2 (MCP23017)
-    gp_fitaLedPia = 1 # GPB1 (MCP23017)
-    gp_fitaLedChuveiro = 1 # GPA1 (MCP23017)
-    gp_ledVermelhoChuveiro = 0 # GPB0 (MCP23017)
+    gp_travaGaveta = 2 # GPB2 (MCP23017 0x24)
+    gp_fitaLedPia = 1 # GPB1 (MCP23017 0x24)
+    gp_fitaLedChuveiro = 1 # GPA1 (MCP23017 0x24)
+    gp_ledVermelhoChuveiro = 0 # GPB0 (MCP23017 0x24)
 
-    # Variavel de sicronismo do som de registro aberto(Agua caindo)
+    # Variavel de sincronismo do som de registro aberto(Agua caindo)
     registrosFechados = False # Inicialmente False
 
     # Sobreescrevendo metodo setup() da classe pai
@@ -57,8 +57,8 @@ class Logica_8(Logica_geral):
         GPIO.setup(cls.gpio_registroChuveiro, GPIO.IN) # Pino como PULL-DOWN interno
         GPIO.setup(cls.gpio_veraoChuveiro, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
 
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.ledPiaVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledPiaVerde, GPIO.OUT)
         
 
         # Configurando GPIO's do Extensor 0x24
@@ -68,8 +68,8 @@ class Logica_8(Logica_geral):
         mcp.setup(cls.gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
 
         # Inicialmente somente led vermelho acesso
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.HIGH))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.LOW))
+        GPIO.output(cls.ledPiaVermelho, not(GPIO.HIGH))
+        GPIO.output(cls.ledPiaVerde, not(GPIO.LOW))
         
 
         # Inicialmente em nivel Alto (Rele desacionado - Sem corrente circulando)
@@ -101,11 +101,11 @@ class Logica_8(Logica_geral):
         # Garantir que estao como output
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.ledPiaVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledPiaVerde, GPIO.OUT)
         # Led verde Acesso
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.LOW))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.HIGH))
+        GPIO.output(cls.ledPiaVermelho, not(GPIO.LOW))
+        GPIO.output(cls.ledPiaVerde, not(GPIO.HIGH))
 
     @classmethod
     def apagarFitaLedTorneira(cls):

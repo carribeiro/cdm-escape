@@ -59,10 +59,11 @@ class Logica_1(Logica_geral):
 
         leds = ledsVermelhos + ledsVerdes
 
+        # configura todos os pinos de LED para saída (GPIO.OUT)
         for pino in leds:
             GPIO.setup(pino, GPIO.OUT)
 
-        # Somente Vermelhos Acessos
+        # acende os leds vermelhos, apaga os leds verdes
         for i in range(len(ledsVermelhos)):
             GPIO.output(ledsVermelhos[i], not(GPIO.HIGH))
             GPIO.output(ledsVerdes[i], not(GPIO.LOW))
@@ -73,7 +74,6 @@ class Logica_1(Logica_geral):
         # Codigo binario para manter apenas a luz da sala Acessa
         mcp.escreverBinarioLuzes(0b0001)
         cls._concluida = True
-
 
     # Sobreescrevendo metodo threadLogica() da classe pai
     @classmethod

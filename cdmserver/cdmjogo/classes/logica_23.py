@@ -35,7 +35,6 @@ class Logica_23(Logica_geral):
         mcp.escreverBinarioLuzes(0b0010) # Codigo de acender spot bike e bateria
         cls._concluida = True
 
-
     # Sobreescrevendo metodo threadLogica() da classe pai
     @classmethod
     def threadLogica(cls):

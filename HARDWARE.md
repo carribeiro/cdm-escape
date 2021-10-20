@@ -1,5 +1,18 @@
 # HARDWARE.md
 
+O ambiente do caminhão possui uma controladora Raspbery Pi com duas extensões de IO (MCP23017). 
+O controle do jogo é feito pela interface Web a partir de um notebook externo, conectado pelo cabo.
+Internamente, o Raspberry Pi acessa diversos sensores e atuadores através do conjunto de pinos de 
+IO da porta GPIO interna e das portas de extensão de IO do MCP23017.
+
+Adicionalmente, existem vários subsistemas independentes com microcontroladores Arduíno dentro do 
+caminhão, cuidando de uma parte específica do jogo. Estes sistemas Arduíno se comunicam por meio 
+de pinos de sinal digital que vão para as GPIOs do Raspberry Pi. Entre eles temos:
+
+- Um Arduino Nano em cada caixa de leitura RFID.
+- Um Arduino Nano no módulo da mesa de passar (identifica a colocação das 7 roupas no lugar certo)
+
+
 Parte das saídas do sistema está ligada na GPIO, e parte no MCP.
 
 Os leds estão na GPIO.
@@ -15,194 +28,72 @@ uma das pequenas surpresas do processo de "engenharia reversa" do jogo.
 
 ## TABELA DE CONEXÕES
 
-| Porta            | Nº do Cabo conectado | Descrição                                                             |
-|------------------|----------------------|-----------------------------------------------------------------------|
-| PINO 7           | 2.1                  | LDR Registro Chuveiro                                                 |
-| PINO 11          | 1.1                  | Chave Verão/Inverno                                                   |
-| PINO 13          | 4.1                  | LDR Registro Torneira                                                 |
-| PINO 15          | 3.2                  | Gaveta Banheiro - LED Vermelho                                        |
-| PINO 19          | 3.1                  | Gaveta Banheiro - LED Verde                                           |
-| PINO 21          | 5.2                  | Gaveta Cozinha - LED Vermelho                                         |
-| PINO 23          | 5.1                  | Gaveta Cozinha - LED Verde                                            |
-| PINO 24          | 6.1                  | Armario Cozinha - LED Verde                                           |
-| PINO 29          | 6.2                  | Armario Cozinha - Led Vermelho                                        |
-| PINO 31          | 7.1                  | Tomadas do armario em serie                                           |
-| PINO 33          | 8.2                  | Modulo Etiqueta RFID Microondas (Apos divisor de tensão 3.3V Arduino) |
-| PINO 35          | 9.2                  | Divisoria - LED Verde                                                 |
-| PINO 37          | 9.1                  | Divisoria - LED Vermelho                                              |
-| PINO 40          | 10.2                 | Geladeira - LED Verde                                                 |
-| PINO 38          | 10.1                 | Geladeira - LED Vermelho                                              |
-| PINO 36          | 11.1                 | Modulo Etiqueta RFID Geladeira (Apos divisor de tensão 3.3V Arduino)  |
-| PINO 32          | 12.2                 |                                                                       |
-| PINO 26          | DESCONECTADO         | -                                                                     |
-| PINO 22          | DESCONECTADO         | -                                                                     |
-| PINO 18          | 13.1                 |                                                                       |
-| PINO 16          | 13.2                 |                                                                       |
-| PINO 12          | 14.1                 |                                                                       |
-| PINO 10          | 14.2                 |                                                                       |
-| PINO 8           | 15.2                 |                                                                       |
-| GPB 0 (MCP 0x22) | 16.1                 |                                                                       |
-| GPB 1 (MCP 0x22) | DESCONECTADO         | -                                                                     |
-| GPB 2 (MCP 0x22) | 19.2                 |                                                                       |
-| GPB 3 (MCP 0x22) | DESCONECTADO         |                                                                       |
-| GPB 4 (MCP 0x22) | 18.2                 |                                                                       |
-| GPB 5 (MCP 0x22) | CONECTADO (Nº?)      | Botão Reestabelecer Energia                                           |
-| GPB 6 (MCP 0x22) | DESCONECTADO         | -                                                                     |
-| GPB 7 (MCP 0x22) | DESCONECTADO         | -                                                                     |
-| GPA 0 (MCP 0x22) | DESCONECTADO         | -                                                                     |
-| GPA 1 (MCP 0x22) | DESCONECTADO         | -                                                                     |
-| GPA 2 (MCP 0x22) | DESCONECTADO         | -                                                                     |
-| GPA 3 (MCP 0x22) | DESCONECTADO         | -                                                                     |
-| GPA 4 (MCP 0x22) | Modulo Iluminação    | BIT 0 (Pino 2 Arduino)                                                |
-| GPA 5 (MCP 0x22) | Modulo Iluminação    | BIT 1 (Pino 3 Arduino)                                                |
-| GPA 6 (MCP 0x22) | Modulo Iluminação    | BIT 2 (Pino 4 Arduino)                                                |
-| GPA 7 (MCP 0x22) | Modulo Iluminação    | BIT 3 (Pino 5 Arduino)                                                |
+| Porta            | Nº do Cabo         | Setor      | Fase      | Nome do sinal                      | Descrição                                                             |
+|------------------|--------------------|------------|-----------|------------------------------------|-----------------------------------------------------------------------|
+| PINO 7           | 2.1                | Banheiro   | 8         | gpio_registroChuveiro              | LDR Registro Chuveiro                                                 |
+| PINO 8           | 15.2               | Sala       | 1213      | gpio_pinoSinalQuadros              |                                                                       |
+| PINO 10          | 14.2               | Sala       | 1 1213    | ledAparadorVerde                   |                                                                       |
+| PINO 11          | 1.1                | Banheiro   | 8         | gpio_veraoChuveiro                 | Chave Verão/Inverno                                                   |
+| PINO 12          | 14.1               | Sala       | 1 1213    | ledAparadorVermelho                |                                                                       |
+| PINO 13          | 4.1                | Banheiro   | 8         | gpio_registroTorneira              | LDR Registro Torneira                                                 |
+| PINO 15          | 3.2                | Banheiro   | 1 8       | ledPiaVermelho                     | Gaveta Banheiro - LED Vermelho                                        |
+| PINO 16          | 13.2               | Sala       | 1 1011    | ledBauVerde                        |                                                                       |
+| PINO 18          | 13.1               | Sala       | 1 1011    | ledBauVermelho                     |                                                                       |
+| PINO 19          | 3.1                | Banheiro   | 1 8       | ledPiaVerde                        | Gaveta Banheiro - LED Verde                                           |
+| PINO 21          | 5.2                | Cozinha    | 1         | ledGavetaInferiorVermelho          | Gaveta Cozinha - LED Vermelho                                         |
+| PINO 22          | DESCONECTADO       |            |           |                                    | -                                                                     |
+| PINO 23          | 5.1                | Cozinha    | 1         | ledGavetaInferiorVerde             | Gaveta Cozinha - LED Verde                                            |
+| PINO 24          | 6.1                | Cozinha    | 1 9       | ledAcimaMicroondasVerde            | Armario Cozinha - LED Verde                                           |
+| PINO 26          | DESCONECTADO       |            |           |                                    | -                                                                     |
+| PINO 29          | 6.2                | Cozinha    | 1 9       | ledAcimaMicroondasVermelho         | Armario Cozinha - Led Vermelho                                        |
+| PINO 31          | 7.1                | Cozinha    | 1011      | gpio_pinoSinalTomadas              | Tomadas do armario em serie                                           |
+| PINO 32          | 12.2               |            | 7         | gpio_pinoSinalGeladeira            | Pino que indica o resultado das questões dentro da geladeira          |
+| PINO 33          | 8.2                | Cartões    | 6         | gpio_etiquetaMicroondas            | Modulo Etiqueta RFID Microondas (div. tensão 3.3V Arduino, pull down interno ) |
+| PINO 35          | 9.2                | Banheiro   | 1 7       | ledDivisoriaVerde                  | Divisoria - LED Verde                                                 |
+| PINO 36          | 11.1               | Cartões    | 6         | gpio_etiquetaGeladeira             | Modulo Etiqueta RFID Geladeira (div. tensão 3.3V Arduino, pull down interno ) |
+| PINO 37          | 9.1                | Banheiro   | 1 7       | ledDivisoriaVermelho               | Divisoria - LED Vermelho                                              |
+| PINO 38          | 10.1               | Geladeira  | 1 6       | ledGeladeiraVermelho               | Geladeira - LED Vermelho                                              |
+| PINO 40          | 10.2               | Geladeira  | 1 6       | ledGeladeiraVerde                  | Geladeira - LED Verde                                                 |
+| GPA 0 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
+| GPA 1 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
+| GPA 2 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
+| GPA 3 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
+| GPA 4 (MCP 0x22) | Modulo Iluminação  | Iluminação |           |                                    | BIT 0 (Pino 2 Arduino)                                                |
+| GPA 5 (MCP 0x22) | Modulo Iluminação  | Iluminação |           |                                    | BIT 1 (Pino 3 Arduino)                                                |
+| GPA 6 (MCP 0x22) | Modulo Iluminação  | Iluminação |           |                                    | BIT 2 (Pino 4 Arduino)                                                |
+| GPA 7 (MCP 0x22) | Modulo Iluminação  | Iluminação |           |                                    | BIT 3 (Pino 5 Arduino)                                                |
+| GPB 0 (MCP 0x22) | 16.1               | Bicicleta  | 45        | gp_reedSwitchBicicleta             |                                                                       |
+| GPB 1 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
+| GPB 2 (MCP 0x22) | 19.2               | Lavanderia | 9         | gp_pinoSinalMesaPassar             |                                                                       |
+| GPB 3 (MCP 0x22) | DESCONECTADO       |            |           |                                    |                                                                       |
+| GPB 4 (MCP 0x22) | 18.2               | Cartões    | 6         | gp_etiquetaMaquina                 |                                                                       |
+| GPB 5 (MCP 0x22) | CONECTADO (Nº?)    | Sala       | 1213      | gp_chaveVitoria                    | Botão Reestabelecer Energia                                           |
+| GPB 6 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
+| GPB 7 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
+| GPA 0 (MCP 0x24) |                    |            |           |                                    |                                                                       |
+| GPA 1 (MCP 0x24) |                    | Banheiro   | 8         | gp_fitaLedChuveiro                 |                                                                       |
+| GPA 2 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
+| GPA 3 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
+| GPA 4 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
+| GPA 5 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
+| GPA 6 (MCP 0x24) |                    | Sala       | 1011      | gp_travaBau                        |                                                                       |
+| GPA 7 (MCP 0x24) |                    | Sala       | 1213      | gp_travaAparador                   |                                                                       |
+| GPB 0 (MCP 0x24) | ?                  | Banheiro   | 8         | gp_ledVermelhoChuveiro             |                                                                       |
+| GPB 1 (MCP 0x24) |                    | Banheiro   | 8         | gp_fitaLedPia                      |                                                                       |
+| GPB 2 (MCP 0x24) |                    | Banheiro   | 8         | gp_travaGavetaBanheiro             |                                                                       |
+| GPB 3 (MCP 0x24) |                    | Banheiro   | 7         | gp_travaPortaBanheiro              |                                                                       |
+| GPB 4 (MCP 0x24) | ?                  | Cozinha    | 45        | gp_travaGavetaArmario              |                                                                       |
+| GPB 5 (MCP 0x24) |                    | Cozinha    | 9         | gp_travaPortaArmario               |                                                                       |
+| GPB 6 (MCP 0x24) |                    | Geladeira  | 6         | gp_travaGeladeira                  |                                                                       |
+| GPB 7 (MCP 0x24) |                    | Banheiro   | 7         | gp_ledsJogoGeladeira               |                                                                       |
 
-# Lógica 1
-
-Constantes para acionar cada um dos LEDs da GPIO
-
-```
     # GPIO's
-    ledDivisoriaVermelho = 37 # Divisora
-    ledDivisoriaVerde = 35
-    ledGavetaInferiorVermelho = 21 # Gaveta inferior
-    ledGavetaInferiorVerde = 23
-    ledAcimaMicroondasVermelho = 29 # Porta acima do microondas
-    ledAcimaMicroondasVerde = 24
-    ledPiaVermelho = 15 # Pia banheiro
-    ledPiaVerde = 19
-    ledAparadorVermelho = 12 # Aparador
+    gpio_pinoSinalQuadros = 8 # Sinal 3.3v vindo do arduino quadros (raspberry)
+    gp_chave = 5 # Botao GPB5 (MCP23017 0x22)
+
+    ledAparadorVermelho = 12
     ledAparadorVerde = 10
-    ledBauVermelho = 18 # Bau
-    ledBauVerde = 16
-    ledGeladeiraVermelho = 38 # Geladeira 40 e 38
-    ledGeladeiraVerde = 40
-```
-# Lógica 23
-
-Não entendi ainda a lógica, mas existem várias constantes que controlam as luzes todas.
-
-```
-        mcp.escreverBinarioLuzes(0b1101) # Codigo do Blackout
-        mcp.escreverBinarioLuzes(0b0010) # Codigo de acender spot bike e bateria
-
-```
-
-# Lógica 45
-
-```
-    # GPIO's 
-    gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017)
-    gpio_ledGavetaVermelho = 21 # Led indicador de gaveta fechada (raspberry)
-    gpio_ledGavetaVerde = 23 # Led indicador de gaveta aberta (raspberry)
-    # Relés
-    gp_barraLed = [2,3,4,5] # GPA5, GPA4, GPA3, GPA2 (MCP23017)
-    #gp_luzCasa = 0 # GPA0 (MCP23017)
-    gp_travaGaveta = 4 #GPB4 (MCP23017)
- 
-        GPIO.setup(cls.gpio_ledGavetaVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledGavetaVerde, GPIO.OUT)
-
-        mcp.setup(cls.gp_reedSwitchBicicleta, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
-
-        # Configurando GPIO's do Extensor 0x24
-        mcp.setup(cls.gp_barraLed[0], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.setup(cls.gp_barraLed[1], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.setup(cls.gp_barraLed[2], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.setup(cls.gp_barraLed[3], mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        #mcp.setup(cls.gp_luzCasa    , mcp.GPA, mcp.OUT, mcp.ADDRESS2)
-        mcp.setup(cls.gp_travaGaveta, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-```
-
-
-Código para ler o reed
-
-```
-def status_reed_bicicleta():
-    gp_reedSwitchBicicleta = 0 # GPB0 (MCP23017)
-    mcp.setup(gp_reedSwitchBicicleta, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
-    leitura = mcp.input(gp_reedSwitchBicicleta, mcp.GPB, mcp.ADDRESS1)    
-```
-
-
-Código para controlar a gaveta do armário
-
-```
-def pulso_abrir_gaveta():
-
-    # trava da gaveta do armário é o sinal 4 da GPB (MCP23017)
-	gp_travaGaveta = 4 #GPB4 (MCP23017)
-
-    # Garantir que o pino esta como OUTPUT
-    mcp.setup(gp_travaGaveta , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-    
-    # Em nivel Baixo acionando o Rele
-    mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
-    time.sleep(1)
-    # Em nivel Alto desacionando o Rele
-    mcp.output(cls.gp_travaGaveta, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
-```
-
-
-```
-    def acenderSpotGavetaCozinha(cls):
-        mcp.escreverBinarioLuzes(0b0011) # Codigo do Spot Gaveta cozinha
-```
-
-
-
-    # GPIO's
-    gpio_tomadas = 31 # Pino para leitura das tomadas ligadas em serie (raspberry)
-    gpio_ledVermelho = 18
-    gpio_ledVerde = 16
 
     # Relés
-    gp_travaBau = 6 # GPA6 (MCP23017)
-
-
-# Lógica 6
-
-```
-    # GPIO's
-    gpio_etiquetaGeladeira = 36 # 36 Raspberry
-    gpio_etiquetaMicroondas = 33 # 33 Raspberry
-    gp_etiquetaMaquina = 4 # GPB4 (MCP23017)
-
-    GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
-    GPIO.setwarnings(False) # Desativa avisos
-    GPIO.setup(cls.gpio_etiquetaGeladeira, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
-    GPIO.setup(cls.gpio_etiquetaMicroondas, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
-    mcp.setup(cls.gp_etiquetaMaquina, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Etiqueta maquina
-
-    leituraGel = GPIO.input(cls.gpio_etiquetaGeladeira)
-    leituraMic = GPIO.input(cls.gpio_etiquetaMicroondas)
-    leituraMaq = mcp.input(cls.gp_etiquetaMaquina, mcp.GPB, mcp. ADDRESS1)
-```
-
-```
-    # Relés
-    gp_travaGeladeira = 6 # GPB6 (MCP23017)
-
-    # Loop pois a trava causa disturbio no sistema
-    for i in range(1):
-        # Garantir que o pino esta como OUTPUT
-        mcp.setup(cls.gp_travaGeladeira , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
-        
-        # Em nivel Baixo acionando o Rele
-        mcp.output(cls.gp_travaGeladeira, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
-        time.sleep(0.75)
-
-```
-
-# Lógica 7
-
-```
-mcp.escreverBinarioLuzes(0b0101) # Codigo do Spot do banheiro
-```
-
-# Lógica 8
-
-```
-mcp.escreverBinarioLuzes(0b0110) # Codigo do Spot da lavanderia e pia do banheiro
-```
+    #gp_luzAparador = x #  (MCP23017 ?)
+    gp_travaAparador = 7 # GPA7 (MCP23017 0x24)

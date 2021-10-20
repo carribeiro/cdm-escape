@@ -18,12 +18,12 @@ b. Ao encaixar todas as peças abrirá o armário da cozinha, em cima do Micro-o
 class Logica_9(Logica_geral):
     
     # GPIO's
-    gp_sinal = 2 # Sinal 3.3v , GPB2 (MCP23017)
-    gpio_ledVermelho = 29 # (raspberry)
-    gpio_ledVerde = 24 # (raspberry)
+    gp_pinoSinalMesaPassar = 2 # Sinal 3.3v , GPB2 (MCP23017 0x22)
+    ledAcimaMicroondasVermelho = 29 # (raspberry)
+    ledAcimaMicroondasVerde = 24 # (raspberry)
 
     # Relés
-    gp_travaArmario = 5 # GPB5 (MCP23017)
+    gp_travaPortaArmario = 5 # GPB5 (MCP23017 0x24)
 
     # Sobreescrevendo metodo setup() da classe pai
     @classmethod
@@ -36,20 +36,20 @@ class Logica_9(Logica_geral):
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        mcp.setup(cls.gp_sinal, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
+        mcp.setup(cls.gp_pinoSinalMesaPassar, mcp.GPB, mcp.IN, mcp.ADDRESS1) # Reed Switch bicicleta
 
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.ledAcimaMicroondasVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledAcimaMicroondasVerde, GPIO.OUT)
 
         # Configurando GPIO's do Extensor 0x24
-        mcp.setup(cls.gp_travaArmario, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.setup(cls.gp_travaPortaArmario, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
 
         # Inicialmente somente led vermelho acesso
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.HIGH))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.LOW))
+        GPIO.output(cls.ledAcimaMicroondasVermelho, not(GPIO.HIGH))
+        GPIO.output(cls.ledAcimaMicroondasVerde, not(GPIO.LOW))
 
         # Inicialmente em nivel Alto (Rele desacionado - Sem corrente circulando)
-        mcp.output(cls.gp_travaArmario, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+        mcp.output(cls.gp_travaPortaArmario, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
 
         # Luzes ao inicio da Logica
         mcp.confRegistradoresLuzes() # GPA como output
@@ -63,24 +63,24 @@ class Logica_9(Logica_geral):
         cls._concluida = True
 
         # Garantir que o pino esta como OUTPUT
-        mcp.setup(cls.gp_travaArmario , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+        mcp.setup(cls.gp_travaPortaArmario , mcp.GPB, mcp.OUT, mcp.ADDRESS2)
         
         # Em nivel Baixo acionando o Rele
-        mcp.output(cls.gp_travaArmario, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        mcp.output(cls.gp_travaPortaArmario, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
         time.sleep(1)
         # Em nivel Alto desacionando o Rele
-        mcp.output(cls.gp_travaArmario, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+        mcp.output(cls.gp_travaPortaArmario, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
 
         # Configurado GPIO's do raspberry
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.ledAcimaMicroondasVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledAcimaMicroondasVerde, GPIO.OUT)
 
         # Acender led verde
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.LOW))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.HIGH))
+        GPIO.output(cls.ledAcimaMicroondasVermelho, not(GPIO.LOW))
+        GPIO.output(cls.ledAcimaMicroondasVerde, not(GPIO.HIGH))
 
 
     # Metodo para acender o spot das tomadas do armario
@@ -95,16 +95,16 @@ class Logica_9(Logica_geral):
         # Repete enquanto esta logica não for concluida
         while cls.isConcluida() == False:
             # Se receber um sinal Baixo na porta, abre o armario (Sinal de 500ms em baixo)
-            sinal = mcp.input(cls.gp_sinal, mcp.GPB, mcp.ADDRESS1)
+            sinal = mcp.input(cls.gp_pinoSinalMesaPassar, mcp.GPB, mcp.ADDRESS1)
 
             # Checa tambem a cada intervalo de tempo se o sinal continua em nivel baixo
             if sinal == 0:
                 time.sleep(0.125)
-                sinal = mcp.input(cls.gp_sinal, mcp.GPB, mcp.ADDRESS1)
+                sinal = mcp.input(cls.gp_pinoSinalMesaPassar, mcp.GPB, mcp.ADDRESS1)
 
                 if sinal == 0:
                     time.sleep(0.125)
-                    sinal = mcp.input(cls.gp_sinal, mcp.GPB, mcp.ADDRESS1)
+                    sinal = mcp.input(cls.gp_pinoSinalMesaPassar, mcp.GPB, mcp.ADDRESS1)
                     
                     if sinal == 0:
                         # Marca a logica como concluida para tocar o som

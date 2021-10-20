@@ -22,13 +22,13 @@ f. Após responder corretamente a porta do banheiro abrirá.
 class Logica_7(Logica_geral):
 
     # GPIO's
-    gpio_pinoSinal = 32 # Botoeiras ligadas em serie usando somente um pino (raspberry)
+    gpio_pinoSinalGeladeira = 32 # Botoeiras ligadas em serie usando somente um pino (raspberry)
     gpio_ledVermelho = 37 # Led vermelho indicando ordem incorreta
     gpio_ledVerde = 35 # Led verde indicando ordem correta
 
     # Relés
-    gp_ledsJogoGeladeira = 7 #GPB7
-    gp_travaPortaBanheiro = 3 # GPB3 (MCP23017)
+    gp_ledsJogoGeladeira = 7 #GPB7 (MCP23017 0x24)
+    gp_travaPortaBanheiro = 3 # GPB3 (MCP23017 0x24)
 
     # Sobreescrevendo metodo setup() da classe pai
     @classmethod
@@ -41,7 +41,7 @@ class Logica_7(Logica_geral):
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        GPIO.setup(cls.gpio_pinoSinal, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+        GPIO.setup(cls.gpio_pinoSinalGeladeira, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
         
         GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT) # Pino como PULL-DOWN interno
         GPIO.setup(cls.gpio_ledVerde, GPIO.OUT) # Pino como PULL-DOWN interno
@@ -112,7 +112,7 @@ class Logica_7(Logica_geral):
         # Repete enquanto esta logica não for concluida
         while cls.isConcluida() == False:
             # Se o botão for pressionado, checa o estado das botoeiras
-            if GPIO.input(cls.gpio_pinoSinal) == 0:
+            if GPIO.input(cls.gpio_pinoSinalGeladeira) == 0:
                 
                 # Marca a logica como concluida para tocar o som juntamente com piscar dos leds
                 cls._concluida = True

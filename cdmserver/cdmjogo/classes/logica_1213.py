@@ -22,15 +22,15 @@ energia e inicio do encerramento do jornal.
 class Logica_1213(Logica_geral):
     
     # GPIO's
-    gpio_sinal = 8 # Sinal 3.3v vindo do arduino quadros (raspberry)
-    gp_chave = 5 # Botao GPB5 (MCP23017)
+    gpio_pinoSinalQuadros = 8 # Sinal 3.3v vindo do arduino quadros (raspberry)
+    gp_chaveVitoria = 5 # Botao GPB5 (MCP23017 0x22)
 
-    gpio_ledVermelho = 12
-    gpio_ledVerde = 10
+    ledAparadorVermelho = 12
+    ledAparadorVerde = 10
 
     # Relés
-    #gp_luzAparador = x #  (MCP23017)
-    gp_travaAparador = 7 # GPA7 (MCP23017)
+    #gp_luzAparador = x #  (MCP23017 ?)
+    gp_travaAparador = 7 # GPA7 (MCP23017 0x24)
 
     # Sobreescrevendo metodo setup() da classe pai
     @classmethod
@@ -43,19 +43,19 @@ class Logica_1213(Logica_geral):
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        GPIO.setup(cls.gpio_sinal, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.gpio_pinoSinalQuadros, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+        GPIO.setup(cls.ledAparadorVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledAparadorVerde, GPIO.OUT)
 
-        mcp.setup(cls.gp_chave, mcp.GPB, mcp.IN, mcp.ADDRESS1)
+        mcp.setup(cls.gp_chaveVitoria, mcp.GPB, mcp.IN, mcp.ADDRESS1)
 
         # Configurando GPIO's do Extensor 0x24
         #mcp.setup(cls.gp_luzAparador, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
         mcp.setup(cls.gp_travaAparador, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
 
         # Inicialmente somente led vermelho acesso
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.HIGH))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.LOW))
+        GPIO.output(cls.ledAparadorVermelho, not(GPIO.HIGH))
+        GPIO.output(cls.ledAparadorVerde, not(GPIO.LOW))
 
         # Inicialmente em nivel Baixo (Rele acionado - Luz apagada)
         #mcp.output(cls.gp_luzAparador, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
@@ -107,12 +107,12 @@ class Logica_1213(Logica_geral):
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.ledAparadorVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledAparadorVerde, GPIO.OUT)
 
         # Acender led verde
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.LOW))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.HIGH))
+        GPIO.output(cls.ledAparadorVermelho, not(GPIO.LOW))
+        GPIO.output(cls.ledAparadorVerde, not(GPIO.HIGH))
 
 
     # Sobreescrevendo metodo threadLogica() da classe pai
@@ -123,7 +123,7 @@ class Logica_1213(Logica_geral):
         
         while cls.isConcluida() == False:
 
-            if GPIO.input(cls.gpio_sinal) == 1 and gavetaAberta == False:
+            if GPIO.input(cls.gpio_pinoSinalQuadros) == 1 and gavetaAberta == False:
                 # Nao possui som esta etapa
                 # Luzes
                 cls.rotinaBlackout()
@@ -133,7 +133,7 @@ class Logica_1213(Logica_geral):
                 gavetaAberta = True
 
             # Se o botao for pressionado
-            if mcp.input(cls.gp_chave, mcp.GPB, mcp.ADDRESS1) == 1:
+            if mcp.input(cls.gp_chaveVitoria, mcp.GPB, mcp.ADDRESS1) == 1:
                 # reestabele energia
                 cls.reestabelecerEnergia()
 

@@ -21,12 +21,12 @@ que já é possivel ver mudanças nos comportamentos das pessoas (elaborar texto
 class Logica_1011(Logica_geral):
     
     # GPIO's
-    gpio_tomadas = 31 # Pino para leitura das tomadas ligadas em serie (raspberry)
-    gpio_ledVermelho = 18
-    gpio_ledVerde = 16
+    gpio_pinoSinalTomadas = 31 # Pino para leitura das tomadas ligadas em serie (raspberry)
+    ledBauVermelho = 18
+    ledBauVerde = 16
 
     # Relés
-    gp_travaBau = 6 # GPA6 (MCP23017)
+    gp_travaBau = 6 # GPA6 (MCP23017 0x24)
 
     # Sobreescrevendo metodo setup() da classe pai
     @classmethod
@@ -39,16 +39,16 @@ class Logica_1011(Logica_geral):
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        GPIO.setup(cls.gpio_tomadas, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.gpio_pinoSinalTomadas, GPIO.IN, pull_up_down = GPIO.PUD_DOWN) # Pino como PULL-DOWN interno
+        GPIO.setup(cls.ledBauVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledBauVerde, GPIO.OUT)
 
         # Configurando GPIO's do Extensor 0x24
         mcp.setup(cls.gp_travaBau, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
 
         # Inicialmente somente led vermelho acesso
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.HIGH))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.LOW))
+        GPIO.output(cls.ledBauVermelho, not(GPIO.HIGH))
+        GPIO.output(cls.ledBauVerde, not(GPIO.LOW))
 
         # Inicialmente em nivel Alto (Rele desacionado - Sem corrente circulando)
         mcp.output(cls.gp_travaBau, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
@@ -71,12 +71,12 @@ class Logica_1011(Logica_geral):
         GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
         GPIO.setwarnings(False) # Desativa avisos
         
-        GPIO.setup(cls.gpio_ledVermelho, GPIO.OUT)
-        GPIO.setup(cls.gpio_ledVerde, GPIO.OUT)
+        GPIO.setup(cls.ledBauVermelho, GPIO.OUT)
+        GPIO.setup(cls.ledBauVerde, GPIO.OUT)
 
         # Acender led verde
-        GPIO.output(cls.gpio_ledVermelho, not(GPIO.LOW))
-        GPIO.output(cls.gpio_ledVerde, not(GPIO.HIGH))
+        GPIO.output(cls.ledBauVermelho, not(GPIO.LOW))
+        GPIO.output(cls.ledBauVerde, not(GPIO.HIGH))
 
         # Acender Spot Bau
         #cls.acenderSpotBau()
@@ -101,16 +101,16 @@ class Logica_1011(Logica_geral):
         # Repete enquanto esta logica não for concluida
         while cls.isConcluida() == False:
             # Se for detectado a conexão das tomadas abre o bau
-            leitura = GPIO.input(cls.gpio_tomadas)
+            leitura = GPIO.input(cls.gpio_pinoSinalTomadas)
 
             # Checa tambem a cada intervalo de tempo se o sinal continua em nivel alto
             if leitura == 1:
                 time.sleep(0.125)
-                leitura = GPIO.input(cls.gpio_tomadas)
+                leitura = GPIO.input(cls.gpio_pinoSinalTomadas)
 
                 if leitura == 1:
                     time.sleep(0.125)
-                    leitura = GPIO.input(cls.gpio_tomadas)
+                    leitura = GPIO.input(cls.gpio_pinoSinalTomadas)
 
                     if leitura == 1:
                         # Marca a logica como concluida para tocar o som

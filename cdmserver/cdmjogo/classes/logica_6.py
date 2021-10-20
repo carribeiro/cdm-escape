@@ -20,14 +20,14 @@ class Logica_6(Logica_geral):
     # GPIO's
     gpio_etiquetaGeladeira = 36 # 36 Raspberry
     gpio_etiquetaMicroondas = 33 # 33 Raspberry
-    gp_etiquetaMaquina = 4 # GPB4 (MCP23017)
+    gp_etiquetaMaquina = 4 # GPB4 (MCP23017 0x22)
 
     ## Geladeira 40 e 38
     gpio_ledVermelho = 38
     gpio_ledVerde = 40
 
     # Relés
-    gp_travaGeladeira = 6 # GPB6 (MCP23017)
+    gp_travaGeladeira = 6 # GPB6 (MCP23017 0x24)
 
     # Sobreescrevendo metodo setup() da classe pai
     @classmethod
