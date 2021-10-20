@@ -334,9 +334,9 @@ def read_status_cartoes():
     global count_cartao_lavadora
 
     # calcula o status, registrando um pulso de forma permanente
-    count_cartao_geladeira = count_cartao_geladeira + 1 if cartao_geladeira else 0
-    count_cartao_microondas = count_cartao_microondas + 1 if cartao_microondas else 0
-    count_cartao_lavadora = count_cartao_lavadora + 1 if cartao_lavadora else 0
+    count_cartao_geladeira = count_cartao_geladeira + (1 if cartao_geladeira else 0)
+    count_cartao_microondas = count_cartao_microondas + (1 if cartao_microondas else 0)
+    count_cartao_lavadora = count_cartao_lavadora + (1 if cartao_lavadora else 0)
 
     return count_cartao_geladeira, count_cartao_microondas, count_cartao_lavadora
 
