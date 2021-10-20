@@ -265,18 +265,28 @@ def read_status_tomadas_armario():
             return True
     """
 
+pulso_mesa_passar = 0
+
 def read_status_mesa_passar():
+    global pulso_mesa_passar
     mcp.confRegistradoresBanheiroAberto()
     gp_mesa_passar = 2 # GPB2 (MCP23017 0x22)
-    mcp.setup(gp_mesa_passar, mcp.GPB, mcp.IN, mcp.ADDRESS1)
-    return mcp.input(gp_mesa_passar, mcp.GPB, mcp.ADDRESS1) == 0
+    mcp.setup(gp_mesa_passar, mcp.GPB, mcp.IN, mcp.ADDRESS1) 
+    if (mcp.input(gp_mesa_passar, mcp.GPB, mcp.ADDRESS1) == 0):
+        pulso_mesa_passar += 1
+    return pulso_mesa_passar
+
+pulso_quiz_geladeira = 0
 
 def read_status_botao_geladeira():
+    global pulso_quiz_geladeira
     gpio_botao_geladeira = 32 # GPIO 32 (Raspberry Pi)
     GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
     GPIO.setwarnings(False) # Desativa avisos
-    GPIO.setup(gpio_botao_geladeira, GPIO.IN) # Pino como PULL-DOWN interno
-    return (GPIO.input(gpio_botao_geladeira) == 0)
+    GPIO.setup(gpio_botao_geladeira, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    if (GPIO.input(gpio_botao_geladeira) == 0):
+        pulso_quiz_geladeira += 1
+    return pulso_quiz_geladeira
 
 def read_status_botao_aparador():
     gp_botao_aparador = 5 # GPB5 (MCP23017 0x22)
