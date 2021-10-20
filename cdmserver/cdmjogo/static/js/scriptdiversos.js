@@ -16,5 +16,7 @@ function updateStatus(resposta) {
     document.querySelector('#status-quiz-geladeira').className = ((resposta.geladeira > 0) ? "dot dotVerde" : "dot dotCinza");
     document.querySelector('#count-quiz-geladeira').innerHTML = resposta.geladeira;
     document.querySelector('#status-botao-aparador').className = (resposta.aparador ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#status-caminho-energia').className = ((resposta.caminho_energia > 0) ? "dot dotVerde" : "dot dotCinza");
+    document.querySelector('#count-caminho-energia').innerHTML = resposta.caminho_energia;
 
 }

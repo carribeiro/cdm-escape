@@ -293,6 +293,18 @@ def read_status_botao_aparador():
     mcp.setup(gp_botao_aparador, mcp.GPB, mcp.IN, mcp.ADDRESS1)
     return (mcp.input(gp_botao_aparador, mcp.GPB, mcp.ADDRESS1) == 1)
 
+pulso_caminho_energia = 0
+
+def read_status_caminho_energia():
+    global pulso_caminho_energia
+    gpio_caminho_energia = 8 # GPIO 8 (Raspberry Pi)
+    GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
+    GPIO.setwarnings(False) # Desativa avisos
+    GPIO.setup(gpio_caminho_energia, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    if (GPIO.input(gpio_caminho_energia) == 0):
+        pulso_caminho_energia += 1
+    return pulso_caminho_energia
+
 status_cartao_geladeira = False
 status_cartao_microondas = False
 status_cartao_lavadora = False
@@ -354,6 +366,7 @@ def ajaxdebugstatus(request):
         'tomadas_armario': read_status_tomadas_armario(),
         'mesa_passar': read_status_mesa_passar(),
         'geladeira': read_status_botao_geladeira(),
+        'caminho_energia': read_status_caminho_energia(),
         'aparador': read_status_botao_aparador(),
         'ldr_pia': ldr_pia,
         'ldr_chuveiro': ldr_chuveiro,
