@@ -249,7 +249,8 @@ def read_status_tomadas_armario():
     gpio_tomadas_armario = 31 # GPIO 31 (Raspberry Pi)
     GPIO.setwarnings(False) # Desativa avisos
     GPIO.setup(gpio_tomadas_armario, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-    pulso = (GPIO.input(gpio_tomadas_armario) == 0)
+    # enquanto estiver com alguma tomada aberta, retorna 0
+    pulso = (GPIO.input(gpio_tomadas_armario) == 1)
     return pulso
     """
     # lógica de filtro está confusa preciso testar pra ver se é necessário
