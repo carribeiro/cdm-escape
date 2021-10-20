@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.min.css' %}">
+    <!-- Meus Styles -->
+    <link rel="stylesheet" href="{% static 'css/styledebug.css' %}">
+    <title>::Desenvolvimento::</title>
+</head>
+<body>
+    <h1>Pagina de DEBUG - Desenvolvimento</h1>
+    <div>
+        <a href="desenvolvimento" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Desenvolvimento</a>
+        <a href="teste_cartoes" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Teste Cartões</a>
+        <a href="teste_banheiro" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Teste Banheiro</a>
+        <a href="teste_diversos" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Teste Diversos</a>
+    </div>
+    <div>
+        <button id="btn-set-leds" type="button" class="btn btn-info">SET LEDs</button>
+        <button id="btn-reset-leds" type="button" class="btn btn-info">RESET LEDs</button>
+        <button id="btn-refresh-status" type="button" class="btn btn-info">ATUALIZA STATUS</button>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+            <th scope="col">Sensor</th>
+            <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <th scope="row">Cartão geladeira</th>
+            <td>
+                <span id="status-cartao-geladeira" class="dot dotCinza"></span>
+                <button id="btn-reset-cartao-geladeira" type="button" class="btn btn-info">RESET CARTÃO GELADEIRA</button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Cartão microondas</th>
+            <td>
+                <span id="status-cartao-microondas" class="dot dotCinza"></span>
+                <button id="btn-reset-cartao-microondas" type="button" class="btn btn-info">RESET CARTÃO MICROONDAS</button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Cartão lavadora</th>
+            <td>
+                <span id="status-cartao-lavadora" class="dot dotCinza"></span>
+                <button id="btn-reset-cartao-lavadora" type="button" class="btn btn-info">RESET CARTÃO LAVADORA</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.min.js' %}"></script>
+
+    <!-- Meus Scripts -->
+    <script src="{% static 'js/scriptdebug.js' %}"></script>
+    <script src="{% static 'js/scriptcartoes.js' %}"></script>
+
+    <script>
+        function poll_status() {
+          setTimeout(function () {
+             getStatus();
+          }, 2000);
+        }
+
+        function GetStatus() {
+            jQuery.ajax({
+                url: "ajaxdebugstatus",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                success: function(resultData) {
+                    updateStatus(resultData)
+                },
+                error : function(xhr, textStatus, errorThrown) {
+                    //...
+                    ;
+                },
+                complete: function() {
+                   poll_status();
+                },
+                timeout: 0,
+            });
+        }
+
+        $( document ).ready( function() { poll_status(); });
+    </script>
+</body>
+</html>

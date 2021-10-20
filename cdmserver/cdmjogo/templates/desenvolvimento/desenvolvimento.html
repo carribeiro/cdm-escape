@@ -12,10 +12,18 @@
     <title>::Desenvolvimento::</title>
 </head>
 <body>
-    <h1>Pagina de DEBUG - Desenvolvimento</h1>   
-    <button id="btn-set-leds" type="button" class="btn btn-info">SET LEDs</button>
-    <button id="btn-reset-leds" type="button" class="btn btn-info">RESET LEDs</button>
-    <button id="btn-refresh-status" type="button" class="btn btn-info">ATUALIZA STATUS</button>
+    <h1>Pagina de DEBUG - Desenvolvimento</h1>
+    <div>
+        <a href="desenvolvimento" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Desenvolvimento</a>
+        <a href="teste_cartoes" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Teste Cartões</a>
+        <a href="teste_banheiro" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Teste Banheiro</a>
+        <a href="teste_diversos" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Teste Diversos</a>
+    </div>
+    <div>
+        <button id="btn-set-leds" type="button" class="btn btn-info">SET LEDs</button>
+        <button id="btn-reset-leds" type="button" class="btn btn-info">RESET LEDs</button>
+        <button id="btn-refresh-status" type="button" class="btn btn-info">ATUALIZA STATUS</button>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -167,6 +175,8 @@
           <th scope="col">Status</th>
           <th scope="col">Enviar código</th>
         </tr>
+      </thead>
+      <tbody>
         <tr>
             <th scope="row">Abrir Banheiro</th>
             <td><span id="status-trava-banheiro" class="dot dotCinza"></span></td>
@@ -294,6 +304,7 @@
 
     <!-- Meus Scripts -->
     <script src="{% static 'js/scriptdebug.js' %}"></script>
+    <script src="{% static 'js/scriptdesenvolvimento.js' %}"></script>
 
     <script>
         function poll_status() {
@@ -302,7 +313,7 @@
           }, 2000);
         }
 
-        function GetData() {
+        function GetStatus() {
             jQuery.ajax({
                 url: "ajaxdebugstatus",
                 type: "GET",

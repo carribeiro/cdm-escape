@@ -10,9 +10,14 @@ urlpatterns = [
     path('ajaxiniciarjogo', views.ajaxiniciarjogo, name='ajaxiniciarjogo'), # O ajax usara para chama a view ajaxiniciarjogo
     path('ajaxstatus', views.ajaxstatus, name='ajaxstatus'), # O ajax usara para chama a view ajaxstatus
 
-    path('ajaxhistoria2', views.ajaxhistoria2, name='ajaxhistoria2'), # O ajax usará para chamar a view ajaxhistoria2
+    # não chegou a ser usada
+    #path('ajaxhistoria2', views.ajaxhistoria2, name='ajaxhistoria2'), # O ajax usará para chamar a view ajaxhistoria2
+
     path('desenvolvimento', views.desenvolvimento, name='desenvolvimento'), # URL para DEBUG, chamara a view desenvolvimento
     path('ajaxdesenvolvimento', views.ajaxdesenvolvimento, name='ajaxdesenvolvimento'), # Ajax para DEBUG, chamara a view ajaxdesenvolvimento
+    path('teste_cartoes', views.teste_cartoes, name='teste_cartoes'), # URL de teste dos sinais dos cartões (loop de teste dos três)
+    path('teste_banheiro', views.teste_banheiro, name='teste_banheiro'), # URL de teste dos sinais do banheiro
+    path('teste_diversos', views.teste_diversos, name='teste_diversos'), # URL de teste dos sinais do caminho da energia, lavanderia, gaveta e interno da geladeira
 
     path('ajaxdebugstatus', views.ajaxdebugstatus, name='ajaxdebugstatus'), # O ajax usara para chama a view ajaxdebugstatus
 

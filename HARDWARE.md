@@ -71,29 +71,18 @@ uma das pequenas surpresas do processo de "engenharia reversa" do jogo.
 | GPB 6 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
 | GPB 7 (MCP 0x22) | DESCONECTADO       |            |           |                                    | -                                                                     |
 | GPA 0 (MCP 0x24) |                    |            |           |                                    |                                                                       |
-| GPA 1 (MCP 0x24) |                    | Banheiro   | 8         | gp_fitaLedChuveiro                 |                                                                       |
+| GPA 1 (MCP 0x24) | ?                  | Banheiro   | 8         | gp_fitaLedChuveiro                 |                                                                       |
 | GPA 2 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
 | GPA 3 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
 | GPA 4 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
 | GPA 5 (MCP 0x24) | ?                  | Bicicleta  | 45        |                                    | Nível de carga da bateria                                             |
-| GPA 6 (MCP 0x24) |                    | Sala       | 1011      | gp_travaBau                        |                                                                       |
-| GPA 7 (MCP 0x24) |                    | Sala       | 1213      | gp_travaAparador                   |                                                                       |
+| GPA 6 (MCP 0x24) | ?                  | Sala       | 1011      | gp_travaBau                        |                                                                       |
+| GPA 7 (MCP 0x24) | ?                  | Sala       | 1213      | gp_travaAparador                   |                                                                       |
 | GPB 0 (MCP 0x24) | ?                  | Banheiro   | 8         | gp_ledVermelhoChuveiro             |                                                                       |
-| GPB 1 (MCP 0x24) |                    | Banheiro   | 8         | gp_fitaLedPia                      |                                                                       |
-| GPB 2 (MCP 0x24) |                    | Banheiro   | 8         | gp_travaGavetaBanheiro             |                                                                       |
-| GPB 3 (MCP 0x24) |                    | Banheiro   | 7         | gp_travaPortaBanheiro              |                                                                       |
+| GPB 1 (MCP 0x24) | ?                  | Banheiro   | 8         | gp_fitaLedPia                      |                                                                       |
+| GPB 2 (MCP 0x24) | ?                  | Banheiro   | 8         | gp_travaGavetaBanheiro             |                                                                       |
+| GPB 3 (MCP 0x24) | ?                  | Banheiro   | 7         | gp_travaPortaBanheiro              |                                                                       |
 | GPB 4 (MCP 0x24) | ?                  | Cozinha    | 45        | gp_travaGavetaArmario              |                                                                       |
-| GPB 5 (MCP 0x24) |                    | Cozinha    | 9         | gp_travaPortaArmario               |                                                                       |
-| GPB 6 (MCP 0x24) |                    | Geladeira  | 6         | gp_travaGeladeira                  |                                                                       |
-| GPB 7 (MCP 0x24) |                    | Banheiro   | 7         | gp_ledsJogoGeladeira               |                                                                       |
-
-    # GPIO's
-    gpio_pinoSinalQuadros = 8 # Sinal 3.3v vindo do arduino quadros (raspberry)
-    gp_chave = 5 # Botao GPB5 (MCP23017 0x22)
-
-    ledAparadorVermelho = 12
-    ledAparadorVerde = 10
-
-    # Relés
-    #gp_luzAparador = x #  (MCP23017 ?)
-    gp_travaAparador = 7 # GPA7 (MCP23017 0x24)
+| GPB 5 (MCP 0x24) | ?                  | Cozinha    | 9         | gp_travaPortaArmario               |                                                                       |
+| GPB 6 (MCP 0x24) | ?                  | Geladeira  | 6         | gp_travaGeladeira                  |                                                                       |
+| GPB 7 (MCP 0x24) | ?                  | Banheiro   | 7         | gp_ledsJogoGeladeira               |                                                                       |

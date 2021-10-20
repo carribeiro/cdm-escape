@@ -168,12 +168,31 @@ def ajaxstatus(request):
 
 # ------------- FIM AJAX ------------------
 
-# View para DEBUG do projeto
+# Views para DEBUG do projeto
+
 def desenvolvimento(request):
 
     mcp.confRegistradores()
     mcp.confRegistradoresLuzes() # GPA como output
     return render(request, 'desenvolvimento/desenvolvimento.html', {})
+
+def teste_cartoes(request):
+
+    mcp.confRegistradores()
+    mcp.confRegistradoresLuzes() # GPA como output
+    return render(request, 'desenvolvimento/teste_cartoes.html', {})
+
+def teste_banheiro(request):
+
+    mcp.confRegistradores()
+    mcp.confRegistradoresLuzes() # GPA como output
+    return render(request, 'desenvolvimento/teste_banheiro.html', {})
+
+def teste_diversos(request):
+
+    mcp.confRegistradores()
+    mcp.confRegistradoresLuzes() # GPA como output
+    return render(request, 'desenvolvimento/teste_diversos.html', {})
 
 def ajaxdesenvolvimento(request):
     dicionario_json = {
