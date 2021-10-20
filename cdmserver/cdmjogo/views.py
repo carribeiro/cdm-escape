@@ -301,7 +301,7 @@ def read_status_caminho_energia():
     GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
     GPIO.setwarnings(False) # Desativa avisos
     GPIO.setup(gpio_caminho_energia, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-    if (GPIO.input(gpio_caminho_energia) == 0):
+    if (GPIO.input(gpio_caminho_energia) == 1):
         pulso_caminho_energia += 1
     return pulso_caminho_energia
 
