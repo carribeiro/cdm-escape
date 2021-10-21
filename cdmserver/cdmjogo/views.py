@@ -269,7 +269,7 @@ pulso_mesa_passar = 0
 
 def read_status_mesa_passar():
     global pulso_mesa_passar
-    mcp.confRegistradoresBanheiroAberto()
+    #mcp.confRegistradoresBanheiroAberto()
     gp_mesa_passar = 2 # GPB2 (MCP23017 0x22)
     mcp.setup(gp_mesa_passar, mcp.GPB, mcp.IN, mcp.ADDRESS1) 
     if (mcp.input(gp_mesa_passar, mcp.GPB, mcp.ADDRESS1) == 0):
