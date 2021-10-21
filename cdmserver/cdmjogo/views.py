@@ -694,9 +694,6 @@ def read_sensores_banheiro(efeitos=False):
     gp_fitaLedChuveiro = 1 # GPA1 (MCP23017)
     gp_ledVermelhoChuveiro = 0 # GPB0 (MCP23017)
 
-    # Configurar os registradores
-    mcp.confRegistradoresBanheiroAberto()
-
     # Configurado GPIO's do raspberry
     GPIO.setmode(GPIO.BOARD) # Contagem de (0 a 40)
     GPIO.setwarnings(False) # Desativa avisos
@@ -712,6 +709,9 @@ def read_sensores_banheiro(efeitos=False):
     print("SENSORES BANHEIRO:", ldr_pia, ldr_chuveiro, seletor_verao)
 
     if (efeitos):
+        # Configurar os registradores
+        mcp.confRegistradoresBanheiroAberto()
+
         if (ldr_pia):
             mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
             mcp.output(gp_fitaLedPia, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
