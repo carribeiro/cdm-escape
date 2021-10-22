@@ -2,6 +2,8 @@
 
 Servidor Django do Escape Game da CDM (Cooperação para o Desenvolvimento e Morada Humana), com parte do contrato de ações educativas para o programa de Eficiência Energética da CEMIG.
 
+V.1.3
+
 ## DESCRIÇÃO GERAL
 
 Jogo de sala de escape, composto de uma sequência de atividades (puzzles) que devem ser resolvidos pela equipe para conclusão do jogo e abertura da sala.
