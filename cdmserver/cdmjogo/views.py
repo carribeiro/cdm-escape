@@ -531,7 +531,7 @@ def setgeladeira(request):
 
             if (nivel == '1'):
                 mcp.output(gp_ledsJogoGeladeira, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
-                print("Luz interna da geladeira: DESLIGADO")
+                print("Luz interna da geladeira: LIGADO")
             if (nivel == '0'):
                 mcp.output(gp_ledsJogoGeladeira, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
                 print("Luz interna da geladeira: DESLIGADO")
