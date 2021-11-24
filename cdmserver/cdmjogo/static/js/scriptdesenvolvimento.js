@@ -47,6 +47,9 @@ const btn_led_38_lo = document.querySelector('#btn-led-38-lo')
 const btn_led_40_hi = document.querySelector('#btn-led-40-hi')
 const btn_led_40_lo = document.querySelector('#btn-led-40-lo')
 
+const btn_luz_interna_geladeira_on = document.querySelector('#btn-luz-interna-geladeira-on')
+const btn_luz_interna_geladeira_off = document.querySelector('#btn-luz-interna-geladeira-off')
+
 btn_led_37_hi.addEventListener('click', function(){ requestSetLedHi(37); }); 
 btn_led_37_lo.addEventListener('click', function(){ requestSetLedLo(37); });
 btn_led_35_hi.addEventListener('click', function(){ requestSetLedHi(35); }); 
@@ -75,6 +78,10 @@ btn_led_38_hi.addEventListener('click', function(){ requestSetLedHi(38); });
 btn_led_38_lo.addEventListener('click', function(){ requestSetLedLo(38); });
 btn_led_40_hi.addEventListener('click', function(){ requestSetLedHi(40); }); 
 btn_led_40_lo.addEventListener('click', function(){ requestSetLedLo(40); });
+
+btn_luz_interna_geladeira_on.addEventListener('click', function(){ requestSetGeladeira(1); }); 
+btn_luz_interna_geladeira_off.addEventListener('click', function(){ requestSetGeladeira(0); });
+
 
 const btn_abrir_banheiro = document.querySelector('#btn-abrir-banheiro')
 btn_abrir_banheiro.addEventListener('click', function(){ requestPulsoBanheiro('ABRIR'); }); 

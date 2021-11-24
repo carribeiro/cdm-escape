@@ -517,6 +517,30 @@ def setbateria(request):
 
     return JsonResponse(dicionario_json)
 
+def setgeladeira(request):
+    dicionario_json = {
+        'retorno': 'setgeladeira = FAIL!'
+    }
+    if request.method == 'GET':
+        nivel = request.GET.get('nivel', None)
+
+        if nivel in ['0','1']:
+
+            gp_ledsJogoGeladeira = 7 #GPB7 (MCP23017 0x24)
+            mcp.setup(gp_ledsJogoGeladeira, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+
+            if (nivel == '1'):
+                mcp.output(gp_ledsJogoGeladeira, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+            if (nivel == '0'):
+                mcp.output(gp_ledsJogoGeladeira, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+
+            dicionario_json = {
+                'retorno': 'setgeladeira = PASSED!',
+                'nivel': nivel,
+            }
+
+    return JsonResponse(dicionario_json)
+
 def pulso_abrir_banheiro(request):
     dicionario_json = {
         'retorno': 'Pulso abrir banheiro, REQUEST INVALIDO',

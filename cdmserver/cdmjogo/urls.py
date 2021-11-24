@@ -28,6 +28,7 @@ urlpatterns = [
     path('setledlo', views.setledlo, name='setledlo'), 
     path('setspotcode', views.setspotcode, name='setspotcode'), 
     path('setbateria', views.setbateria, name='setbateria'), 
+    path('setgeladeira', views.setgeladeira, name='setgeladeira'), 
 
     path('resetcartaogeladeira', views.resetcartaogeladeira, name='resetcartaogeladeira'), 
     path('resetcartaomicroondas', views.resetcartaomicroondas, name='resetcartaomicroondas'), 

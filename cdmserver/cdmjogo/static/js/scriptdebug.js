@@ -104,6 +104,21 @@ function requestSetBateria(nivel){
     xhttp.send()
 }
 
+function requestSetGeladeira(nivel){
+    var xhttp = new XMLHttpRequest();
+    var url = "setgeladeira?nivel=" + nivel;
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var resposta = JSON.parse(this.responseText);
+
+            console.log(resposta.retorno);
+        }
+    }
+    xhttp.open("GET",url,true);
+    xhttp.send()
+}
+
 function requestResetCartaoGeladeira() {
     var xhttp = new XMLHttpRequest();
     var url = "resetcartaogeladeira";
