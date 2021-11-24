@@ -685,6 +685,9 @@ def pulso_abrir_gaveta_aparador(request):
         mcp.output(gp_travaAparador, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
     return JsonResponse(dicionario_json)
 
+"""
+Já que não tem baú vou usar o codigo do método existente pra acender o banheiro, depois a gente mexe na UI
+
 def pulso_abrir_bau(request):
     dicionario_json = {
         'retorno': 'Pulso abrir bau, REQUEST INVALIDO',
@@ -705,6 +708,46 @@ def pulso_abrir_bau(request):
         mcp.output(gp_travaBau, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
         time.sleep(1)
         mcp.output(gp_travaBau, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
+    return JsonResponse(dicionario_json)
+
+"""
+
+banheiro_aceso = False
+
+#def pulso_acende_banheiro(request):
+
+
+def pulso_abrir_bau(request):
+    dicionario_json = {
+        'retorno': 'Pulso acende banheiro, REQUEST INVALIDO',
+    }
+
+    gp_fitaLedPia = 1 # GPB1 (MCP23017)
+    gp_fitaLedChuveiro = 1 # GPA1 (MCP23017)
+    gp_ledVermelhoChuveiro = 0 # GPB0 (MCP23017)
+
+    if request.method == 'GET':
+        dicionario_json = {
+            'retorno': 'Pulso acende banheiro, OK!',
+        }
+        global banheiro_aceso
+        if (banheiro_aceso):
+            banheiro_aceso = False
+            mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedPia, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+            mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.LOW, mcp.ADDRESS2)
+            mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.LOW, mcp.ADDRESS2)
+        else:
+            banheiro_aceso = True
+            mcp.setup(gp_fitaLedPia, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedPia, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+            mcp.setup(gp_fitaLedChuveiro, mcp.GPA, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_fitaLedChuveiro, mcp.GPA, mcp.HIGH, mcp.ADDRESS2)
+            mcp.setup(gp_ledVermelhoChuveiro, mcp.GPB, mcp.OUT, mcp.ADDRESS2)
+            mcp.output(gp_ledVermelhoChuveiro, mcp.GPB, mcp.HIGH, mcp.ADDRESS2)
+
     return JsonResponse(dicionario_json)
 
 
